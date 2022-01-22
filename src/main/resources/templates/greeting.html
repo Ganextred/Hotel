@@ -4,7 +4,21 @@
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
-<p th:text="'Hello, ' + ${name} + '!'" />
+    <div>
+        <form method="post">
+            <input type="text" name="username" placeholder="Имя" />
+            <input type="text" name="email" placeholder="Емаил">
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
+    <div>Список сообщений</div>
+    <div  th:each="user : ${users}">
+        <b  th:text="${user.getId()}"> </b>
+        <span th:text="${user.getUsername()}"> </span>
+        <i th:text="${user.getEmail()}"> </i>
+    </div>
+<p th:text="'Hello!'" />
 </body>
 </html>
