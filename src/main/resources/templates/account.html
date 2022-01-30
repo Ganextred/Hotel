@@ -6,6 +6,7 @@
 </head>
 
 <body>
+<div>
     <div>
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
@@ -23,6 +24,9 @@
         <span th:text="${user.getUsername()}"> </span>
         <i th:text="${user.getEmail()}"> </i>
     </div>
-<p th:text="'Hello!'" />
+</div>
+<div>Аккаунт</div>
+
+<!--<p th:text="'Hello!'" />-->
 </body>
 </html>

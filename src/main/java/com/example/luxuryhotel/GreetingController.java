@@ -15,13 +15,20 @@ public class GreetingController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/greeting")
+    @GetMapping("/")
     public String greeting(Model model) {
         Iterable<HotelUser> users = userRepository.findAll();
         model.addAttribute("users",users);
         return "greeting";
     }
-    @PostMapping("/greeting")
+    @GetMapping("/account")
+    public String account(Model model) {
+        Iterable<HotelUser> users = userRepository.findAll();
+        model.addAttribute("users",users);
+        return "account";
+    }
+
+    @PostMapping("/adduser")
     public String add(@RequestParam(name="username", required=false, defaultValue="World") String username,
                       @RequestParam(name="email", required=false, defaultValue="Fdsf") String email,
                       Model model){
@@ -29,7 +36,7 @@ public class GreetingController {
         userRepository.save(hotelUser);
         Iterable<HotelUser> users = userRepository.findAll();
         model.addAttribute("users",users);
-        return "greeting";
+        return "account";
     }
 
 }
