@@ -8,33 +8,34 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Controller
+@RequestMapping("/register")
 public class RegisterController {
     @Autowired
     private UserRepository userRepository;
 
 
-    @GetMapping("/register")
+    @GetMapping
     public String register (){
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public String addUser (User user, Model model){
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
         if (userFromDb != null) {
-            model.addAttribute("message", "user already exist");
+            model.addAttribute("message", "user with such username or email already exist");
             return "register";
         }
         Set<Role> roles= new HashSet<>();
         roles.add (Role.USER);
         user.setActive(true);
         user.setRoles(roles);
-        user.setEmail("null@gmail.com");
         userRepository.save(user);
 
         return "redirect:/login";

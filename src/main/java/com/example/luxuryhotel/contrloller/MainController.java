@@ -21,12 +21,6 @@ public class MainController {
         model.addAttribute("users",users);
         return "greeting";
     }
-    @GetMapping("/account")
-    public String account(Model model) {
-        Iterable<User> users = userRepository.findAll();
-        model.addAttribute("users",users);
-        return "account";
-    }
 
     @PostMapping("/adduser")
     public String add(@RequestParam(name="username", required=false, defaultValue="World") String username,
