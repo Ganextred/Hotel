@@ -1,5 +1,5 @@
-
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,24 +20,21 @@
     }</script>
     <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
+
 <div class="sidenav">
     <div class="login-main-text">
         <h2>Application<br> Login Page</h2>
-        <p>Login or register from here to access.</p>
+        <p>Register from here to access.</p>
+        <div  th:each="item : ${message}">
+            <span th:text="${item}"> </span>
+        </div>
     </div>
 </div>
 <div class="main">
     <div class="col-md-6 col-sm-12">
-        <b th:text="${message}"></b>
         <div class="login-form">
             <form th:action="@{/register}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                 <div class="form-group">
                     <label>User Name</label>
                     <input type="text" name="username" class="form-control" placeholder="User Name">
@@ -63,24 +60,3 @@
 </div>
 <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d5a86e8c8761622',m:'wxVC58W2Ck_KDJ3.M7X_TBEcFLBFrOBrIY3yqYgbcOM-1643543891-0-ATE8Sp5A6OcqsRbi7fme+bKto1+VgiY/ciB/rSJ6R3TISZWB2Q+V1bX/0J6uMaA/9verTEq4w0w25A8xGyhCU/thiVC8iz5XaegJvLrpu2D0OPl2fb01HjAluSmfneQtrcCPUCx9oqdofpDDjP94a0pe9VTajoRhLYHmtGEoWJEkh0XDUZvtW5uDtpKbAxSQz/6Hl/sdfbzInZ9tVX7JBuM=',s:[0x09b1881733,0xdc94061b33],}})();</script></body>
 </html>
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"-->
-<!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
-<!--<head>-->
-<!--    <title>Spring Security Example </title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div th:if="${param.error}">-->
-<!--    Invalid username and password.-->
-<!--</div>-->
-<!--<div th:if="${param.logout}">-->
-<!--    You have been logged out.-->
-<!--</div>-->
-<!--<form th:action="@{/register}" method="post">-->
-<!--    <div><label> User Name : <input type="text" name="username"/> </label></div>-->
-<!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
-<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-<!--    <div><input type="submit" value="Sign In"/></div>-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
