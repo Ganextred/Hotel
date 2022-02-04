@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../static/css/login.css">
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body>
+ <div>
+     <div  th:each="user : ${users}">
+         <b  th:text="${user.getId()}"> </b>
+         <span th:text="${user.getUsername()}"> </span>
+         <i th:text="${user.getEmail()}"> </i>
+         <i th:text="${user.getRoles()}"> </i>
+         <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
+     </div>
+ </div>
+</body>
+</html>

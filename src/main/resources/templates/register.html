@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/header.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -20,9 +21,19 @@
     }</script>
     <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
 <body>
+<header class="header">
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+        <script>
+            function swap_len(){$.get('/lang', function (data){location.reload()})}
+        </script>
+    </div>
+</header>
+
 
 <div class="sidenav">
     <div class="login-main-text">
+        <h2 th:text="#{loginPage}"></h2>
         <h2>Application<br> Login Page</h2>
         <p>Register from here to access.</p>
         <div  th:each="item : ${message}">
@@ -52,8 +63,8 @@
                     <input type="password" class="form-control" id="confirm_password"  placeholder="Confirm Password" onkeyup='check();'>
                     <span id='message'></span>
                 </div>
-                <!--                <button type="submit" class="btn btn-black">Login</button>-->
                 <button type="submit" class="btn btn-secondary">Register</button>
+                <a href="login" class="btn btn-black">Login</a>
             </form>
         </div>
     </div>

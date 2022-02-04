@@ -22,52 +22,57 @@
     You have been logged out.
 </div>
 
+<meta charset="UTF-8">
+<title>Title</title>
+<link rel="stylesheet" href="../static/css/login.css">
+<link rel="stylesheet" href="../static/css/header.css">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body>
+
+<header class="header">
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+        <script>
+            function swap_len(){$.get('/lang',function (data){location.reload()})}
+        </script>
+    </div>
+</header>
+
 <div class="sidenav">
     <div class="login-main-text">
-        <h2>Application<br> Login Page</h2>
-        <p>Login or register from here to access.</p>
+        <h2  th:text="#{Hotel}">Hotel<br></h2>
+        <h2  th:text="#{Login_Page}">Login Page</h2>
+        <p th:text="#{Login_here}">Login here to access.</p>
+        <div th:if="${param.error}" th:text="#{Invalid_username}">>
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}" th:text="#{You_have_been_logged_out}" >
+            You have been logged out.
+        </div>
     </div>
 </div>
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
             <form th:action="@{/login}" method="post">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
                 <div class="form-group">
-                    <label>User Name</label>
-                    <input type="text" name="username" class="form-control" placeholder="User Name">
+                    <label th:text="#{User_Name}">User Name</label>
+                    <input type="text" name="username" class="form-control" th:placeholder="#{User_Name}"placeholder="User Name">
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <label th:text="#{Password}">Password</label>
+                    <input type="password" name="password" class="form-control" th:placeholder="#{Password}"placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-black">Login</button>
-                <a href="register" class="btn btn-secondary">Unregistered? Register</a>
+                <button type="submit" class="btn btn-black" th:text="#{Login}">Login</button>
+                <a href="register" class="btn btn-secondary" th:text="#{Unregistered}">Unregistered? Register</a>
             </form>
         </div>
     </div>
 </div>
 <script type="text/javascript">(function(){window['__CF$cv$params']={r:'6d5a872b8b8d1622',m:'i.N0ZiVBOBM7SlHANmBW4hYsR6I3aloryehfr3dF_1s-1643543902-0-AfPCccCtyV/PrtgFI/Lc9uygo9Mla1jjhF82QbYhlvbEtRDVhI6/9Jwr0MHEyDV329eAHG9cU2VHOSc6C43Bdvg12aFkZRH2CiHug9c+8l61Ekv3IRWcq6sUJW+0xxZVSopPrmOcYPl3jNkxaIiSGvqchC636Krv6quLh4tD8HgQezHpnB6w1+AOlxx3MsQAjA==',s:[0x681bed3199,0x57cc196c1f],}})();</script></body>
 </html>
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"-->
-<!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
-<!--<head>-->
-<!--    <title>Spring Security Example </title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div th:if="${param.error}">-->
-<!--    Invalid username and password.-->
-<!--</div>-->
-<!--<div th:if="${param.logout}">-->
-<!--    You have been logged out.-->
-<!--</div>-->
-<!--<form th:action="@{/login}" method="post">-->
-<!--    <div><label> User Name : <input type="text" name="username"/> </label></div>-->
-<!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
-<!--    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-<!--    <div><input type="submit" value="Sign In"/></div>-->
-<!--</form>-->
-<!--<a href="/register">Register</a>-->
-<!--</body>-->
-<!--</html>-->
