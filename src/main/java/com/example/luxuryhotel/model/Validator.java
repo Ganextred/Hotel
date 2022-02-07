@@ -31,14 +31,14 @@ public class Validator {
             s.add("incorrectUsername");
         }
         if (!email(user.getEmail())) {
-            s.add("incorrectEmail");
+            s.add("Incorrect_email");
         }
         if (!password(user.getPassword())){
-            s.add("incorrectPassword");
+            s.add("Password_problem");
         }
         User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
         if (userFromDb != null) {
-            s.add("userAlreadyExist");
+            s.add("User_already_exist");
         }
         return s;
     }

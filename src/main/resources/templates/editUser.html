@@ -14,8 +14,14 @@
     <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
 <body>
 <div>
-    <form action = "/editUser" method="post">
-        <input type="text" th:value="${user.getUsername()}">
+    <form th:action="@{'/editUser'+${user.getId()}}" method="post">
+        <input name="username" th:type="text" th:value="${user.getUsername()}">
+        <label th:each="role : ${existingRoles}" >
+            <input th:if="${role.name() != 'USER'}" type = "checkbox"  th:text="${role}"
+                   th:checked="${user.getRoles().contains(role)}" >
+        </label>
+        <input th:type="text" th:value="${user.getId()}" name = "id">
+        <button type="submit" th:text="#{save}"></button>
     </form>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package com.example.luxuryhotel.contrloller;
 
 
+import com.example.luxuryhotel.entities.Role;
 import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class AdminController {
     @GetMapping("editUser/{user}")
     public String editUser(Model model, @PathVariable User user){
         model.addAttribute("user", user);
+        model.addAttribute("existingRoles",Role.values());
+
         return "editUser";
     }
 }

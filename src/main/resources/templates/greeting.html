@@ -1,11 +1,28 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/header.css">
 </head>
 
 <body>
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+    </div>
+    <input type="image" onclick="show_menu()" class="hbtn" src="../static/img/menu.png" alt="menu">
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <script>
+        function swap_len(){$.get('/command/lang',function (data){location.reload()})}
+        function show_menu(){document.getElementById("menu").hidden? false : true}
+    </script>
+</header>
     <div>
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
