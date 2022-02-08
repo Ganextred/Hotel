@@ -17,7 +17,7 @@ public class ApartmentStatus {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private  User userId;
+    private  User user;
 
     private LocalDate arrivalDay;
     private LocalDate endDay;
@@ -30,9 +30,9 @@ public class ApartmentStatus {
     public ApartmentStatus() {
     }
 
-    public ApartmentStatus(Apartment apartmentId, User userId, LocalDate arrivalDay, LocalDate endDay, LocalDateTime payTimeLimit,Status status) {
+    public ApartmentStatus(Apartment apartmentId, User user, LocalDate arrivalDay, LocalDate endDay, LocalDateTime payTimeLimit,Status status) {
         this.apartmentId = apartmentId;
-        this.userId = userId;
+        this.user = user;
         this.arrivalDay = arrivalDay;
         this.endDay = endDay;
         this.payTimeLimit = payTimeLimit;
@@ -55,12 +55,12 @@ public class ApartmentStatus {
         this.apartmentId = apartmentId;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDate getArrivalDay() {

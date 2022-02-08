@@ -1,6 +1,7 @@
 package com.example.luxuryhotel.model.command;
 
 import com.example.luxuryhotel.entities.Apartment;
+import com.example.luxuryhotel.entities.ApartmentStatus;
 import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.model.ApartmentManager;
 import com.example.luxuryhotel.repository.UserRepository;
@@ -19,7 +20,9 @@ public class CommandFactory {
     public BookCommand getBookCommand (String arrivalDay, String endDay, Apartment apartment){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepo.findByUsername(auth.getName());
-        System.out.println(user.getEmail());
         return new BookCommand(arrivalDay, endDay, user, apartment,apartmentManager);
+    }
+    public ConfirmBookCommand getConfirmBookCommand (ApartmentStatus apartmentStatus){
+        return new ConfirmBookCommand(apartmentStatus,apartmentManager);
     }
 }

@@ -68,30 +68,49 @@
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-1.jpg">
                     <div class="bi-text">
-                        <span class="b-tag" th:text="#{books}"></span>
+                        <div class="book-list">
+                            <div  th:each="bStatus : ${bStatuses}">
+                                <h6 th:text="#{bookId}"></h6>
+                                <i th:text="${bStatus.getId()}"> </i>
+                                <h6 th:text="#{Username}"></h6>
+                                <span th:text="${bStatus.getUser().getUsername()}"> </span>
+                                <h6 th:text="#{payTimeLimit}"></h6>
+                                <i th:text="${bStatus.getPayTimeLimit()}"> </i>
+                                <form th:action="@{confirmStatus}" method="post">
+                                    <input type="hidden" th:value="${bStatus.getId()}" name="status">
+                                    <button type="submit" th:text="#{confirmStatus}"></button>
+                                </form>
+                            </div>
+                            <span class="b-tag" th:text="#{books}"></span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
                     <div class="bi-text">
-                        <div  th:each="bStatus : ${bStatuses}">
-                            <h6 th:text="#{}"></h6>
-                            <span th:text="${user.getUsername()}"> </span>
-                            <h6 th:text="#{Email}"></h6>
-                            <i th:text="${user.getEmail()}"> </i>
-                            <h6 th:text="#{Roles}"></h6>
-                            <i th:text="${user.getRoles()}"> </i>
-                            <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
+                        <div class="book-list">
+                            <div  th:each="bStatus : ${bStatuses}">
+                                <h6 th:text="#{bookId}"></h6>
+                                <i th:text="${bStatus.getId()}"> </i>
+                                <h6 th:text="#{Username}"></h6>
+                                <span th:text="${bStatus.getUser().getUsername()}"> </span>
+                                <h6 th:text="#{payTimeLimit}"></h6>
+                                <i th:text="${bStatus.getPayTimeLimit()}"> </i>
+                                <form th:action="@{/confirmStatus}" method="post">
+                                    <input type="hidden" th:value="${bStatus.getId()}" name="status">
+                                    <button type="submit" th:text="#{confirmStatus}"></button>
+                                </form>
+                            </div>
+                            <span class="b-tag" th:text="#{requests}"></span>
                         </div>
-                        <span class="b-tag" th:text="#{requests}"></span>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
                     <div class="bi-text">
-                        <div>
+                        <div class="book-list">
                             <div  th:each="user : ${users}">
                                 <h6 th:text="#{Username}"></h6>
                                 <span th:text="${user.getUsername()}"> </span>
@@ -101,8 +120,8 @@
                                 <i th:text="${user.getRoles()}"> </i>
                                 <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
                             </div>
+                            <span class="b-tag" th:text="#{users}"></span>
                         </div>
-                        <span class="b-tag" th:text="#{users}"></span>
                     </div>
                 </div>
             </div>

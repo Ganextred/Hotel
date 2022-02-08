@@ -1,6 +1,8 @@
 package com.example.luxuryhotel.repository;
 
 import com.example.luxuryhotel.entities.ApartmentStatus;
+import com.example.luxuryhotel.entities.Status;
+import com.example.luxuryhotel.entities.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -15,4 +17,7 @@ import java.util.List;
 public interface ApartmentStatusRepository extends CrudRepository<ApartmentStatus, Integer> {
     @Transactional
     List<ApartmentStatus> deleteApartmentStatusByPayTimeLimitBeforeOrEndDayBefore(LocalDateTime dateTime, LocalDate localDate);
+
+    List<ApartmentStatus> findApartmentStatusByStatusAndPayTimeLimitAfter(Status status, LocalDateTime localDateTime);
+
 }

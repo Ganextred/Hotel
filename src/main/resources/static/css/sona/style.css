@@ -2340,3 +2340,7 @@ ul, ol {
 .err-message{
 	color: red;
 }
+
+.book-list{
+	max-height: 70px;
+}

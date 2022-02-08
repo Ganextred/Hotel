@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,14 @@ public class ApartmentManager {
                            LocalDateTime.now().plusDays(2), Status.BOOKED);
             apartmentStatusRepo.save(apartmentStatus);
         }
+        return status;
+    }
+    @Transactional
+    public List<String> confirmBook(ApartmentStatus apartmentStatus) {
+        List<String> status = new ArrayList<>();
+        apartmentStatus.setStatus(Status.BOUGHT);
+        apartmentStatus.setPayTimeLimit(null);
+        apartmentStatusRepo.save(apartmentStatus);
         return status;
     }
 

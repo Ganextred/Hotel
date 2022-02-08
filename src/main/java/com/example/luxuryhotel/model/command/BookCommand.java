@@ -14,7 +14,7 @@ public class BookCommand implements  Command{
     String arrivalDay; String endDay;
     User user;
     Apartment apartment;
-    Boolean status;
+    List<String>status;
     ApartmentManager apartmentManager;
 
     public BookCommand(String arrivalDay, String endDay, User user, Apartment apartment, ApartmentManager apartmentManager) {
@@ -27,10 +27,10 @@ public class BookCommand implements  Command{
 
     @Override
     public List<String> execute() {
-        List<String >status = apartmentManager.book(arrivalDay,endDay,user,apartment);
+        status = apartmentManager.book(arrivalDay,endDay,user,apartment);
         if (status.size() == 0)
             save();
         return status;
     }
-    public void save(){}
+    private void save(){}
 }
