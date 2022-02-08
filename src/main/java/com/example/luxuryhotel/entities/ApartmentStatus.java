@@ -30,6 +30,15 @@ public class ApartmentStatus {
     public ApartmentStatus() {
     }
 
+    public ApartmentStatus(Apartment apartmentId, User userId, LocalDate arrivalDay, LocalDate endDay, LocalDateTime payTimeLimit,Status status) {
+        this.apartmentId = apartmentId;
+        this.userId = userId;
+        this.arrivalDay = arrivalDay;
+        this.endDay = endDay;
+        this.payTimeLimit = payTimeLimit;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }

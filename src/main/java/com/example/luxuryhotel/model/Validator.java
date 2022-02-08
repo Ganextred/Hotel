@@ -1,10 +1,16 @@
 package com.example.luxuryhotel.model;
 
+import com.example.luxuryhotel.entities.Apartment;
+import com.example.luxuryhotel.entities.ApartmentStatus;
 import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.repository.UserRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -13,6 +19,7 @@ import java.util.regex.Pattern;
 public class Validator {
     @Autowired
     private UserRepository userRepository;
+    private final static Logger logger = Logger.getLogger(Validator.class);
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
@@ -41,6 +48,34 @@ public class Validator {
             s.add("User_already_exist");
         }
         return s;
+    }
+
+    public List<String> bookApartment(String arrivalDayStr, String endDayStr, Apartment apartment){
+        List<String> messages=new ArrayList<>();
+        try{
+            LocalDate arrivalDateT = LocalDate.parse(arrivalDayStr);
+            LocalDate endDateT = LocalDate.parse(endDayStr);
+            if (arrivalDateT.compareTo(endDateT)>0){
+                messages.add("wrongDayOrder");
+            }else {
+                for (ApartmentStatus as: apartment.getApartmentStatuses()){
+                    if ((as.getArrivalDay().compareTo(endDateT) <= 0 && as.getEndDay().compareTo(arrivalDateT)>=0 &&
+                            (as.getPayTimeLimit() == null || as.getPayTimeLimit().compareTo(LocalDateTime.now()) >=0))
+                            || arrivalDateT.compareTo(LocalDate.now()) <=0
+                            || endDateT.compareTo(LocalDate.now()) <=0){
+                        messages.add("apartmentNotAvailableOnTime");
+                        break;
+                    }
+                };
+            }
+        }catch (DateTimeParseException e){
+            messages.add("weCantRecognizeDay");
+            logger.warn("Validator got unparsed arrival or end day");
+        }catch (NullPointerException e){
+            messages.add("chooseArrivalOrEndDay");
+            logger.warn("Validator got null(or 0length) arrival or end day");
+        }
+        return messages;
     }
 }
 //    public String regUser (User user){

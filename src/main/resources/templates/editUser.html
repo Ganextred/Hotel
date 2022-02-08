@@ -20,7 +20,6 @@
             <input th:if="${role.name() != 'USER'}" type = "checkbox"  th:text="${role}"
                    th:checked="${user.getRoles().contains(role)}" >
         </label>
-        <input th:type="text" th:value="${user.getId()}" name = "id">
         <button type="submit" th:text="#{save}"></button>
     </form>
 </div>

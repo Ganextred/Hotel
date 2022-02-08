@@ -2335,3 +2335,8 @@ ul, ol {
 		margin-bottom: 10px;
 	}
 }
+
+/*==========*/
+.err-message{
+	color: red;
+}

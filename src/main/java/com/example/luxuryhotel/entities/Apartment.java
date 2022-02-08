@@ -19,6 +19,7 @@ public class Apartment {
     private List<String> images;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name="apartment_id")
     private List<ApartmentStatus> apartmentStatuses;
 
     public List<ApartmentStatus> getApartmentStatuses() {

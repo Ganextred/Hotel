@@ -1,16 +1,25 @@
 package com.example.luxuryhotel.model;
 
 
-import com.example.luxuryhotel.contrloller.RegisterController;
 import com.example.luxuryhotel.entities.Apartment;
+import com.example.luxuryhotel.entities.ApartmentStatus;
+import com.example.luxuryhotel.entities.Status;
+import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.repository.ApartmentRepository;
+import com.example.luxuryhotel.repository.ApartmentStatusRepository;
+import com.example.luxuryhotel.repository.UserRepository;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +30,13 @@ import java.util.Map;
 public class ApartmentManager {
     @Autowired
     ApartmentRepository apartmentRepo;
+    @Autowired
+    UserRepository userRepo;
+    @Autowired
+    ApartmentStatusRepository apartmentStatusRepo;
+
+    @Autowired
+    Validator valid;
 
     private final static Logger logger = Logger.getLogger(ApartmentManager.class);
 
@@ -57,6 +73,19 @@ public class ApartmentManager {
         return sortBySortParams;
     }
 
+    @Transactional
+    public List<String> book(String arrivalDay, String endDay,User user, Apartment apartment) {
+        List<String> status = valid.bookApartment(arrivalDay,endDay,apartment);
+        if (status.size()!=0)
+            return status;
+        else {
+            ApartmentStatus apartmentStatus =
+                    new ApartmentStatus(apartment,user,LocalDate.parse(arrivalDay),LocalDate.parse(endDay),
+                           LocalDateTime.now().plusDays(2), Status.BOOKED);
+            apartmentStatusRepo.save(apartmentStatus);
+        }
+        return status;
+    }
 
 
     public static class TimeInterval{

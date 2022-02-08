@@ -20,7 +20,7 @@
     </div>
     <script>
         function swap_len(){$.get('/command/lang',function (data){location.reload()})}
-        function show_menu(){document.getElementById("menu").hidden? false : true}
+        function show_menu(){!document.getElementById("menu").hidden}
     </script>
 </header>
     <div>
@@ -28,8 +28,8 @@
             <input type="submit" value="Sign Out"/>
         </form>
         <form  th:action="@{/adduser}" method="post">
-            <input type="text" name="username" placeholder="Имя" />
-            <input type="text" name="email" placeholder="Емаил">
+            <label><input type="text" name="username" placeholder="Имя" /></label>
+            <label><input type="text" name="email" placeholder="Емаил"></label>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <button type="submit">Добавить</button>
         </form>

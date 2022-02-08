@@ -1,26 +1,116 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      lang="en">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Room</title>
 
-    <link rel="stylesheet" href="../static/css/login.css">
-
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
-<body>
- <div>
-     <div  th:each="user : ${users}">
-         <b  th:text="${user.getId()}"> </b>
-         <span th:text="${user.getUsername()}"> </span>
-         <i th:text="${user.getEmail()}"> </i>
-         <i th:text="${user.getRoles()}"> </i>
-         <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
-     </div>
- </div>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/sona/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/faticon.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/style.css" type="text/css">
+</head>
+
+<!--header start-->
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+    </div>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <script>
+        function swap_len(){$.get('/lang',function (data){location.reload()})}
+    </script>
+</header>
+<!--header end-->
+
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>Blog</h2>
+                    <div class="bt-option">
+                        <a href="./home.html">Home</a>
+                        <span>Blog Grid</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Blog Section Begin -->
+<section class="blog-section blog-page spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item set-bg" data-setbg="img/blog/blog-1.jpg">
+                    <div class="bi-text">
+                        <span class="b-tag" th:text="#{books}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
+                    <div class="bi-text">
+                        <div  th:each="bStatus : ${bStatuses}">
+                            <h6 th:text="#{}"></h6>
+                            <span th:text="${user.getUsername()}"> </span>
+                            <h6 th:text="#{Email}"></h6>
+                            <i th:text="${user.getEmail()}"> </i>
+                            <h6 th:text="#{Roles}"></h6>
+                            <i th:text="${user.getRoles()}"> </i>
+                            <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
+                        </div>
+                        <span class="b-tag" th:text="#{requests}"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
+                    <div class="bi-text">
+                        <div>
+                            <div  th:each="user : ${users}">
+                                <h6 th:text="#{Username}"></h6>
+                                <span th:text="${user.getUsername()}"> </span>
+                                <h6 th:text="#{Email}"></h6>
+                                <i th:text="${user.getEmail()}"> </i>
+                                <h6 th:text="#{Roles}"></h6>
+                                <i th:text="${user.getRoles()}"> </i>
+                                <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
+                            </div>
+                        </div>
+                        <span class="b-tag" th:text="#{users}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->
+
 </body>
 </html>
+
