@@ -118,7 +118,7 @@
                                 <i th:text="${user.getEmail()}"> </i>
                                 <h6 th:text="#{Roles}"></h6>
                                 <i th:text="${user.getRoles()}"> </i>
-                                <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black">edit</a>
+                                <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black" th:text="#{see}"></a>
                             </div>
                             <span class="b-tag" th:text="#{users}"></span>
                         </div>

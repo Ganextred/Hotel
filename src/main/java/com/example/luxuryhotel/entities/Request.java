@@ -12,14 +12,28 @@ public class Request {
     @JoinColumn(name = "user_id")
     private  User userId;
 
+
+
     private Integer beds;
     private LocalDate arrivalDay;
+    private LocalDate endDay;
     @Enumerated(EnumType.STRING)
     private Clazz clazz;
-    private Integer duration;
     private String text;
+    @Column(columnDefinition = "boolean default false")
+    public boolean answered;
 
     public Request() {
+    }
+
+    public Request(User userId, Integer beds, LocalDate arrivalDay, LocalDate endDay, Clazz clazz, String text, boolean answered) {
+        this.userId = userId;
+        this.beds = beds;
+        this.arrivalDay = arrivalDay;
+        this.endDay = endDay;
+        this.clazz = clazz;
+        this.text = text;
+        this.answered = answered;
     }
 
     public Integer getId() {
@@ -62,20 +76,20 @@ public class Request {
         this.clazz = clazz;
     }
 
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public LocalDate getEndDay() {
+        return endDay;
+    }
+
+    public void setEndDay(LocalDate endDay) {
+        this.endDay = endDay;
     }
 
 }

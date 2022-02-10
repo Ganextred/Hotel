@@ -35,7 +35,6 @@ public class ApartmentManager {
     UserRepository userRepo;
     @Autowired
     ApartmentStatusRepository apartmentStatusRepo;
-
     @Autowired
     Validator valid;
 
@@ -77,9 +76,7 @@ public class ApartmentManager {
     @Transactional
     public List<String> book(String arrivalDay, String endDay,User user, Apartment apartment) {
         List<String> status = valid.bookApartment(arrivalDay,endDay,apartment);
-        if (status.size()!=0)
-            return status;
-        else {
+        if (status.size()==0){
             ApartmentStatus apartmentStatus =
                     new ApartmentStatus(apartment,user,LocalDate.parse(arrivalDay),LocalDate.parse(endDay),
                            LocalDateTime.now().plusDays(2), Status.BOOKED);

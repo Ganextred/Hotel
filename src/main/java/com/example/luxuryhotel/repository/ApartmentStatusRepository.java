@@ -19,5 +19,7 @@ public interface ApartmentStatusRepository extends CrudRepository<ApartmentStatu
     List<ApartmentStatus> deleteApartmentStatusByPayTimeLimitBeforeOrEndDayBefore(LocalDateTime dateTime, LocalDate localDate);
 
     List<ApartmentStatus> findApartmentStatusByStatusAndPayTimeLimitAfter(Status status, LocalDateTime localDateTime);
+    List<ApartmentStatus> findApartmentStatusByUserAndStatusAndPayTimeLimitAfter(User user,Status status, LocalDateTime localDateTime);
+    List<ApartmentStatus> findApartmentStatusByUserAndStatus(User user,Status status);
 
 }

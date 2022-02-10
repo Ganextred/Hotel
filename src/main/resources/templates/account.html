@@ -1,32 +1,137 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
 <head>
-    <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Room</title>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" href="../static/css/sona/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/faticon.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/sona/style.css" type="text/css">
 </head>
 
-<body>
-<div>
-    <div>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-        <form  th:action="@{/adduser}" method="post">
-            <input type="text" name="username" placeholder="Имя" />
-            <input type="text" name="email" placeholder="Емаил">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <button type="submit">Добавить</button>
-        </form>
+<!--header start-->
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
     </div>
-    <div>Список сообщений</div>
-    <div  th:each="user : ${users}">
-        <b  th:text="${user.getId()}"> </b>
-        <span th:text="${user.getUsername()}"> </span>
-        <i th:text="${user.getEmail()}"> </i>
+    <div sec:authorize="isAuthenticated()">
+        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
     </div>
-</div>
-<div>Аккаунт</div>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <script>
+        function swap_len(){$.get('/lang',function (data){location.reload()})}
+    </script>
+</header>
+<!--header end-->
 
-<!--<p th:text="'Hello!'" />-->
+<!-- Inviting Begin -->
+<section class="blog-details-hero set-bg" data-setbg="../static/img/blog-details.jpg">
+    <div class="cont">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="bd-hero-text">
+                    <span th:text="#{welcome}"></span>
+                    <a th:href="@{/requestForm}"><h2 th:text="#{readyToRestLeafeAReaquest}"></h2></a>
+                    <ul>
+                        <span class="b-time" th:text="#{goodRest}"><i class="icon_clock_alt"></i></span>
+                        <span th:text="${user.getUsername()}"><i class="icon_profile"></i> </span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Inviting End -->
+
+
+
+<!-- Blog Section Begin -->
+<section class="blog-section blog-page spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item set-bg" data-setbg="img/blog/blog-1.jpg">
+                    <div class="bi-text">
+                        <div class="book-list">
+                            <div  th:each="bStatus : ${bStatuses}">
+                                <h6 th:text="#{bookId}"></h6>
+                                <i th:text="${bStatus.getId()}"> </i>
+                                <h6 th:text="#{Username}"></h6>
+                                <span th:text="${bStatus.getUser().getUsername()}"> </span>
+                                <h6 th:text="#{payTimeLimit}"></h6>
+                                <i th:text="${bStatus.getPayTimeLimit()}"> </i>
+                                <a th:href="@{'apartment/'+${bStatus.getApartmentId()}}" class="btn btn-black" th:text="#{see}"></a>
+                            </div>
+                            <span class="b-tag" th:text="#{books}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
+                    <div class="bi-text">
+                        <div class="book-list">
+                            <div  th:each="bStatus : ${bStatuses}">
+                                <h6 th:text="#{bookId}"></h6>
+                                <i th:text="${bStatus.getId()}"> </i>
+                                <h6 th:text="#{Username}"></h6>
+                                <span th:text="${bStatus.getUser().getUsername()}"> </span>
+                                <h6 th:text="#{payTimeLimit}"></h6>
+                                <i th:text="${bStatus.getPayTimeLimit()}"> </i>
+                                <form th:action="@{/confirmStatus}" method="post">
+                                    <input type="hidden" th:value="${bStatus.getId()}" name="status">
+                                    <button type="submit" th:text="#{confirmStatus}"></button>
+                                </form>
+                            </div>
+                            <span class="b-tag" th:text="#{requests}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
+                    <div class="bi-text">
+                        <div class="book-list">
+                            <div  th:each="bgStatus : ${bgStatuses}">
+                                <h6 th:text="#{bookId}"></h6>
+                                <i th:text="${bgStatus.getId()}"> </i>
+                                <h6 th:text="#{arrivalDay}"></h6>
+                                <span th:text="${bgStatus.getArrivalDay()}"> </span>
+                                <h6 th:text="#{endDay}"></h6>
+                                <i th:text="${bgStatus.getEndDay()}"> </i>
+                                <a th:href="@{'apartment/'+${bgStatus.getApartmentId()}}" class="btn btn-black" th:text="#{see}"></a>
+                            </div>
+                            <span class="b-tag" th:text="#{yourRooms}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->
+<!--<script src="../static/js/jquery-3.3.1.min.js"></script>-->
+<!--<script src="../static/js/main.js"></script>-->
+
 </body>
 </html>
+

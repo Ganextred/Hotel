@@ -2,6 +2,7 @@ package com.example.luxuryhotel.model;
 
 import com.example.luxuryhotel.entities.Apartment;
 import com.example.luxuryhotel.entities.ApartmentStatus;
+import com.example.luxuryhotel.entities.Clazz;
 import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.apache.log4j.Logger;
@@ -77,20 +78,33 @@ public class Validator {
         }
         return messages;
     }
+    public List<String> sendRequest(String arrivalDay, String endDay, Clazz clazz, Integer beds, String wishes){
+        List<String> messages = new ArrayList<>();
+        if(clazz == null)
+            messages.add("choseClazz");
+        if(beds == null || beds < 0)
+            messages.add("incorrectBeds");
+        if(wishes == null)
+            messages.add("writeWishes");
+        messages.addAll(timeInterval(arrivalDay,endDay));
+        return messages;
+    }
+
+    public List<String> timeInterval(String arrivalDayStr, String endDayStr){
+        List<String> messages = new ArrayList<>();
+        try {
+            LocalDate arrivalDateT = LocalDate.parse(arrivalDayStr);
+            LocalDate endDateT = LocalDate.parse(endDayStr);
+            if (arrivalDateT.compareTo(endDateT) > 0) {
+                messages.add("wrongDayOrder");
+            }
+        }catch (DateTimeParseException e){
+            messages.add("weCantRecognizeDay");
+            logger.warn("Validator got unparsed arrival or end day");
+        }catch (NullPointerException e){
+            messages.add("chooseArrivalOrEndDay");
+            logger.warn("Validator got null(or 0length) arrival or end day");
+        }
+        return messages;
+    }
 }
-//    public String regUser (User user){
-//        if (!userName (user.getUsername())){
-//            return "incorrectUsername";
-//        }
-//        if (!email (user.getEmail())){
-//            return "incorrectEmail";
-//        }
-//        if (!password (user.getPassword())){
-//            return "incorrectPassword";
-//        }
-//        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
-//        if (userFromDb != null) {
-//            return "userAlreadyExist";
-//        }
-//        return "valid";
-//    }

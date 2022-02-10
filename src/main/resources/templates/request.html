@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/header.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/request.css">
+    <title>Advanced Search Form</title>
+</head>
+
+<body>
+
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+    </div>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+    </div>
+    <script>
+        function swap_len(){$.get('/lang',function (data){location.reload()})}
+    </script>
+</header>
+
+<div class="container" id="advanced-search-form">
+    <h2>Advanced Search</h2>
+    <form th:action="@{/sendRequest}" method="post">
+        <div class="form-group">
+            <label for="date-in" th:text="#{checkIn}" ></label>
+            <input name = "arrivalDay" type="date" class="date-input" id="date-in" required>
+        </div>
+        <div class="form-group">
+            <label for="date-out" th:text="#{checkOut}"></label>
+            <input name = "endDay" type="date" class="date-input" id="date-out" required>
+        </div>
+        <div class="form-group">
+            <select name="clazz">
+                <option name = "ECONOMY" value="ECONOMY"  th:text="#{ECONOMY}">
+                <option name = "STANDARD" value="STANDARD"  th:text="#{STANDARD}">
+                <option name = "LUX" value="LUX"  th:text="#{LUX}">
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="beds" th:text="#{beds}"></label>
+            <input type="number" class="form-control" th:placeholder="#{beds}" name="beds" id="beds" required>
+        </div>
+        <div class="form-group">
+           <input type="text" class="big-text" th:placeholder="#{YourWishes}" name="wishes" required>
+        </div>
+        <div class="clearfix"></div>
+        <button type="submit" class="btn btn-info btn-lg btn-responsive" id="search" th:text="#{send}"> <span class="glyphicon glyphicon-search"></span></button>
+    </form>
+</div>
+</body>
+
+</html>
