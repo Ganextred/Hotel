@@ -64,13 +64,13 @@
                 <input type="hidden" name ="request" th:value="${request.getId()}">
                 <label th:each="i: ${#numbers.sequence(0,2)}">
                     <select name = "sortParam[]">
-                        <option value="price" th:text="#{price}"></option>
-                        <option value="beds" th:text="#{beds}"></option>
-                        <option value="clazz" th:text="#{clazz}"></option>
+                        <option value="price" th:text="#{price}" th:selected="${sortParamsD[i].equals('price')}"></option>
+                        <option value="beds" th:text="#{beds}" th:selected="${sortParamsD[i].equals('beds')}" ></option>
+                        <option value="clazz" th:text="#{clazz}" th:selected="${sortParamsD[i].equals('clazz')}" ></option>
                     </select>
                     <select name = "orderParam[]">
-                        <option value="true" th:text="#{asc}"></option>
-                        <option value="false" th:text="#{desc}"></option>
+                        <option value="true" th:text="#{asc}" th:selected="${orderParamsD[i]}"></option>
+                        <option value="false" th:text="#{desc}" th:selected="${!orderParamsD[i]}"></option>
                     </select>
                 </label>
                 <button  type="submit" th:text="#{confirm}"></button>

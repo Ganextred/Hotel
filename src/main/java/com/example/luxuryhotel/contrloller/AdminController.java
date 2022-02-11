@@ -60,8 +60,9 @@ public class AdminController {
     @GetMapping("/seeRequest/")
     public String editUser(Model model, @RequestParam Request request){
         if (!model.containsAttribute("apartments")) {
-            Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(request.getArrivalDay().toString(),request.getEndDay().toString());
-            model.addAttribute("apartments", apartments);
+            apartmentManager.addDefaultModelSortParams(model, request.getArrivalDay().toString(), request.getEndDay().toString());
+//            Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(request.getArrivalDay().toString(),request.getEndDay().toString());
+//            model.addAttribute("apartments", apartments);
         }
         model.addAttribute("request",request);
         return "seeRequest";
@@ -73,8 +74,9 @@ public class AdminController {
                              RedirectAttributes rA){
         Map<String, Boolean> status = new HashMap<>();
         status.put("AVAILABLE", true);
-        Iterable <Apartment> apartments = apartmentManager.getSortedApartments(request.getArrivalDay().toString(),request.getEndDay().toString(), sortParams, orderParams, status);
-        rA.addFlashAttribute("apartments", apartments);
+        apartmentManager.addModelFlashSortParams(rA,request.getArrivalDay().toString(), request.getEndDay().toString(), sortParams, orderParams, status);
+//        Iterable <Apartment> apartments = apartmentManager.getSortedApartments(request.getArrivalDay().toString(),request.getEndDay().toString(), sortParams, orderParams, status);
+//        rA.addFlashAttribute("apartments", apartments);
         return "redirect:/admin/seeRequest/?request="+request.getId().toString();
     }
     @PostMapping("/answerRequest")

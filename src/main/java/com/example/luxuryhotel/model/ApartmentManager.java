@@ -12,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.time.LocalDate;
@@ -45,6 +47,20 @@ public class ApartmentManager {
         return getSortedApartments(arrivalDay, endDay, new String[]{"price"}, new Boolean[]{true}, m);
     }
 
+    public void addDefaultModelSortParams(Model model, String arrivalDay, String endDay){
+        TimeInterval timeInterval = TimeInterval.getValidInterval(arrivalDay, endDay);
+        List<Apartment> apartments= getDefaultApartments(arrivalDay, endDay);
+        model.addAttribute("apartments", apartments);
+        model.addAttribute("arrivalDayD", timeInterval.arrivalDay);
+        model.addAttribute("endDayD", timeInterval.endDay);
+        model.addAttribute("sortParamsD", new String[]{"price", "price", "price"});
+        model.addAttribute("orderParamsD", new Boolean[]{true, true, true});
+        Map<String,Boolean> m = new HashMap<>();
+        m.put ("AVAILABLE", true);
+        model.addAttribute("statusD", m);
+    }
+
+
     public List<Apartment> getSortedApartments(String arrivalDay, String endDay, String[] sortParams, Boolean[] orderParams, Map<String, Boolean> status){
         Sort sortBySortParams = getSort(sortParams, orderParams);
         TimeInterval timeInterval = TimeInterval.getValidInterval(arrivalDay, endDay);
@@ -53,6 +69,17 @@ public class ApartmentManager {
                                 status.containsKey("AVAILABLE"), status.containsKey("BOOKED"),
                                 status.containsKey("BOUGHT"), status.containsKey("INACCESSIBLE"),
                                 sortBySortParams);
+    }
+
+    public void addModelFlashSortParams(RedirectAttributes rA, String arrivalDay, String endDay, String[] sortParams, Boolean[] orderParams, Map<String, Boolean> status){
+        TimeInterval timeInterval = TimeInterval.getValidInterval(arrivalDay, endDay);
+        List<Apartment> apartments= getSortedApartments(arrivalDay, endDay, sortParams, orderParams, status);
+        rA.addFlashAttribute("apartments", apartments);
+        rA.addFlashAttribute("arrivalDayD", timeInterval.arrivalDay);
+        rA.addFlashAttribute("endDayD", timeInterval.endDay);
+        rA.addFlashAttribute("sortParamsD", sortParams);
+        rA.addFlashAttribute("orderParamsD", orderParams);
+        rA.addFlashAttribute("statusD", status);
     }
 
     private Sort getSort (String[] sortParams, Boolean[] orderParams){

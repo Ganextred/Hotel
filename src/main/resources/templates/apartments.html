@@ -65,25 +65,25 @@
             <p th:text="#{sort}"></p>
             <form th:action="@{'/apartments/applySort'}" method="post">
                 <div>
-                    <input type = "date" name="arrivalDay" th:text="#{arrivalDay}" required>
-                    <input type = "date" name = "endDay" th:text="#{endDay}" required>
+                    <input type = "date" name="arrivalDay" th:text="#{arrivalDay}" required th:value="${arrivalDayD}">
+                    <input type = "date" name = "endDay" th:text="#{endDay}" th:value="${endDayD}" required>
                 </div>
                 <label th:each="i: ${#numbers.sequence(0,2)}">
-                    <select name = "sortParam[]">
-                        <option value="price" th:text="#{price}"></option>
-                        <option value="beds" th:text="#{beds}"></option>
-                        <option value="clazz" th:text="#{clazz}"></option>
+                    <select name = "sortParam[]" >
+                        <option value="price" th:text="#{price}" th:selected="${sortParamsD[i].equals('price')}"></option>
+                        <option value="beds" th:text="#{beds}" th:selected="${sortParamsD[i].equals('beds')}" ></option>
+                        <option value="clazz" th:text="#{clazz}" th:selected="${sortParamsD[i].equals('clazz')}" ></option>
                     </select>
-                    <select name = "orderParam[]">
-                        <option value="true" th:text="#{asc}"></option>
-                        <option value="false" th:text="#{desc}"></option>
+                    <select name = "orderParam[]" >
+                        <option value="true" th:text="#{asc}" th:selected="${orderParamsD[i]}"></option>
+                        <option value="false" th:text="#{desc}" th:selected="${!orderParamsD[i]}"></option>
                     </select>
                 </label>
                 <div>
-                    <input name = "AVAILABLE" type = "checkbox"  th:text="#{showAvailable}" checked>
-                    <input name = "BOOKED" type = "checkbox"  th:text="#{showBooked}">
-                    <input name = "BOUGHT" type = "checkbox"  th:text="#{showBought}">
-                    <input name = "INACCESSIBLE" type = "checkbox"  th:text="#{showInaccessible}">
+                    <input name = "AVAILABLE" type = "checkbox"  th:text="#{showAvailable}" th:checked="${statusD.containsKey('AVAILABLE')}">
+                    <input name = "BOOKED" type = "checkbox"  th:text="#{showBooked}" th:checked="${statusD.containsKey('BOOKED')}">
+                    <input name = "BOUGHT" type = "checkbox"  th:text="#{showBought}" th:checked="${statusD.containsKey('BOUGHT')}">
+                    <input name = "INACCESSIBLE" type = "checkbox"  th:text="#{showInaccessible}" th:checked="${statusD.containsKey('INACCESSIBLE')}">
                 </div>
                 <button  type="submit" th:text="#{confirm}"></button>
             </form>
