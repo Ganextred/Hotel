@@ -27,6 +27,17 @@ public class ApartmentStatus {
 
     private LocalDateTime payTimeLimit;
 
+
+    public void clone(ApartmentStatus as){
+        this.id = as.id;
+        this.apartmentId = as.apartmentId;
+        this.user = as.user;
+        this.arrivalDay = as.arrivalDay;
+        this.endDay = as.endDay;
+        this.status = as.status;
+        this.payTimeLimit = as.payTimeLimit;
+    }
+
     public ApartmentStatus() {
     }
 
@@ -106,4 +117,5 @@ public class ApartmentStatus {
     public void setTimeLimit(LocalDateTime timeLimit) {
         this.payTimeLimit = timeLimit;
     }
+
 }

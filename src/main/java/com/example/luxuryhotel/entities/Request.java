@@ -1,5 +1,8 @@
 package com.example.luxuryhotel.entities;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -20,20 +23,27 @@ public class Request {
     @Enumerated(EnumType.STRING)
     private Clazz clazz;
     private String text;
-    @Column(columnDefinition = "boolean default false")
-    public boolean answered;
+    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    public ApartmentStatus answerStatus;
+
+    public ApartmentStatus getAnswerStatus() {
+        return answerStatus;
+    }
+
+    public void setAnswerStatus(ApartmentStatus answerStatus) {
+        this.answerStatus = answerStatus;
+    }
 
     public Request() {
     }
 
-    public Request(User userId, Integer beds, LocalDate arrivalDay, LocalDate endDay, Clazz clazz, String text, boolean answered) {
+    public Request(User userId, Integer beds, LocalDate arrivalDay, LocalDate endDay, Clazz clazz, String text) {
         this.userId = userId;
         this.beds = beds;
         this.arrivalDay = arrivalDay;
         this.endDay = endDay;
         this.clazz = clazz;
         this.text = text;
-        this.answered = answered;
     }
 
     public Integer getId() {

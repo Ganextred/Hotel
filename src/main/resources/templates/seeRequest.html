@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Rooms</title>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/sona/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/faticon.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/style.css" type="text/css">
+
+</head>
+<body>
+<!--header start-->
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="login"><img class="hbtn" src="/static/img/login.png"></a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a href="logout"><img class="hbtn" src="/static/img/logout.png"></a>
+    </div>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="/static/img/lang.png" alt="lang">
+        <script>
+            function swap_len(){$.get('/lang',function (data){location.reload()})}
+        </script>
+    </div>
+</header>
+<!--header end-->
+<!--Список комнат-->
+<section class="rooms-section spad">
+    <div>
+        <h3 th:text="#{requestWithParams}"></h3>
+        <span th:text="#{arrivalDay}"></span>
+        <i th:text="${request.getArrivalDay()}"></i>
+        <span th:text="#{endDay}"></span>
+        <i th:text="${request.getEndDay()}"></i>
+        <span th:text="#{beds}"></span>
+        <i th:text="${request.getBeds()}"></i>
+        <span th:text="#{clazz}"></span>
+        <i th:text="${request.getClazz()}"></i>
+        <p th:text="${request.getText()}"></p>
+    </div>
+    <div class="container">
+        <div>
+            <p th:text="#{sort}"></p>
+            <form th:action="@{'applySort'}" method="post">
+                <input type="hidden" name ="request" th:value="${request.getId()}">
+                <label th:each="i: ${#numbers.sequence(0,2)}">
+                    <select name = "sortParam[]">
+                        <option value="price" th:text="#{price}"></option>
+                        <option value="beds" th:text="#{beds}"></option>
+                        <option value="clazz" th:text="#{clazz}"></option>
+                    </select>
+                    <select name = "orderParam[]">
+                        <option value="true" th:text="#{asc}"></option>
+                        <option value="false" th:text="#{desc}"></option>
+                    </select>
+                </label>
+                <button  type="submit" th:text="#{confirm}"></button>
+            </form>
+        </div>
+
+        <div class="row">
+            <div th:each="apartment : ${apartments}" class="col-lg-4 col-md-6">
+                <div class="room-item">
+                    <img src="/static/img/room/room-details.jpg" alt="img">
+                    <div class="ri-text">
+                        <h4>Premium King Room</h4>
+                        <h3 th:text="${apartment.getPrice()}"><span th:text="#{pricePerNight}"></span></h3>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="r-o" th:text="#{capacity}" ></td>
+                                <td th:text="${apartment.getBeds()}"> </td>
+                            </tr>
+                            <tr>
+                                <td class="r-o" th:text="#{clazz} + ':'"></td>
+                                <td th:text="${apartment.getClazz()}"></td>
+                            </tr >
+                            </tbody>
+                        </table>
+                        <a th:href="@{'/apartment/'+${apartment.getId()}}" class="primary-btn" th:text="#{moreDetails}"></a>
+                        <form th:action="@{/admin/answerRequest}" method="post">
+                            <input type="hidden" th:value="${apartment.getId()}" name="apartment">
+                            <input type="hidden" th:value="${request.getId()}" name="request">
+                            <button type="submit" th:text="#{offer}"></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="room-pagination">
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">Next <i class="fa fa-long-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

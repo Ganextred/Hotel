@@ -1,19 +1,15 @@
 package com.example.luxuryhotel.model;
 
 
-import com.example.luxuryhotel.entities.Apartment;
-import com.example.luxuryhotel.entities.ApartmentStatus;
-import com.example.luxuryhotel.entities.Status;
-import com.example.luxuryhotel.entities.User;
+import com.example.luxuryhotel.entities.*;
 import com.example.luxuryhotel.repository.ApartmentRepository;
 import com.example.luxuryhotel.repository.ApartmentStatusRepository;
+import com.example.luxuryhotel.repository.RequestRepository;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 
+
 @Service
 public class ApartmentManager {
     @Autowired
@@ -36,14 +33,16 @@ public class ApartmentManager {
     @Autowired
     ApartmentStatusRepository apartmentStatusRepo;
     @Autowired
+    RequestRepository requestRepo;
+    @Autowired
     Validator valid;
 
     private final static Logger logger = Logger.getLogger(ApartmentManager.class);
 
-    public List<Apartment> getDefaultApartments(){
+    public List<Apartment> getDefaultApartments(String arrivalDay, String endDay){
         Map<String,Boolean> m = new HashMap<>();
         m.put ("AVAILABLE", true);
-        return getSortedApartments(LocalDate.now().toString(), LocalDate.now().toString(), new String[]{"price"}, new Boolean[]{true}, m);
+        return getSortedApartments(arrivalDay, endDay, new String[]{"price"}, new Boolean[]{true}, m);
     }
 
     public List<Apartment> getSortedApartments(String arrivalDay, String endDay, String[] sortParams, Boolean[] orderParams, Map<String, Boolean> status){
@@ -74,15 +73,17 @@ public class ApartmentManager {
     }
 
     @Transactional
-    public List<String> book(String arrivalDay, String endDay,User user, Apartment apartment) {
+    public Pair<List<String>, ApartmentStatus> book(String arrivalDay, String endDay, User user, Apartment apartment) {
         List<String> status = valid.bookApartment(arrivalDay,endDay,apartment);
+        ApartmentStatus apartmentStatus = new ApartmentStatus();
         if (status.size()==0){
-            ApartmentStatus apartmentStatus =
+            apartmentStatus =
                     new ApartmentStatus(apartment,user,LocalDate.parse(arrivalDay),LocalDate.parse(endDay),
                            LocalDateTime.now().plusDays(2), Status.BOOKED);
             apartmentStatusRepo.save(apartmentStatus);
         }
-        return status;
+
+        return Pair.of(status, apartmentStatus);
     }
     @Transactional
     public List<String> confirmBook(ApartmentStatus apartmentStatus) {
@@ -90,6 +91,18 @@ public class ApartmentManager {
         apartmentStatus.setStatus(Status.BOUGHT);
         apartmentStatus.setPayTimeLimit(null);
         apartmentStatusRepo.save(apartmentStatus);
+        return status;
+    }
+
+    @Transactional
+    public List<String> answerRequest(Request request, Apartment apartment) {
+        Pair<List<String>,ApartmentStatus> bookResult = book(request.getArrivalDay().toString(), request.getEndDay().toString(), request.getUserId(), apartment);
+        List<String> status = bookResult.getFirst();
+        ApartmentStatus apartmentStatus = bookResult.getSecond();
+        if (status.size()==0){
+                request.setAnswerStatus(apartmentStatus);
+                requestRepo.save(request);
+        }
         return status;
     }
 
@@ -115,6 +128,10 @@ public class ApartmentManager {
             try{
                 LocalDate arrivalDateT = LocalDate.parse(arrivalDayStr);
                 LocalDate endDateT = LocalDate.parse(endDayStr);
+                if (arrivalDateT.compareTo(LocalDate.now()) < 0)
+                    arrivalDayStr = LocalDate.now().toString();
+                if (endDateT.compareTo(LocalDate.now()) < 0)
+                    endDayStr = LocalDate.now().toString();
                 if (arrivalDateT.compareTo(endDateT)>0){
                     arrivalDayStr = endDateT.toString();
                     endDayStr = arrivalDateT.toString();

@@ -29,7 +29,7 @@ public class UserManager {
         if (messages.size() == 0){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userRepo.findByUsername(auth.getName());
-            Request r = new Request(user,beds,LocalDate.parse(arrivalDay), LocalDate.parse(endDay), clazz, wishes, false);
+            Request r = new Request(user,beds,LocalDate.parse(arrivalDay), LocalDate.parse(endDay), clazz, wishes);
             requestRepo.save(r);
         }
         return messages;

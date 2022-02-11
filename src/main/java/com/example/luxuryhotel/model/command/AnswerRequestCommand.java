@@ -1,25 +1,27 @@
 package com.example.luxuryhotel.model.command;
 
 import com.example.luxuryhotel.entities.Apartment;
-import com.example.luxuryhotel.entities.ApartmentStatus;
+import com.example.luxuryhotel.entities.Request;
 import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.model.ApartmentManager;
 
 import java.util.List;
 
-public class ConfirmBookCommand implements Command{
-    ApartmentStatus apartmentStatus;
+public class AnswerRequestCommand implements Command {
+    Request request;
+    Apartment apartment;
+    List<String> status;
     ApartmentManager apartmentManager;
-    List<String>status;
 
-    public ConfirmBookCommand(ApartmentStatus apartmentStatus,ApartmentManager apartmentManager) {
-        this.apartmentStatus = apartmentStatus;
+    public AnswerRequestCommand(Request request, Apartment apartment, ApartmentManager apartmentManager) {
+        this.request = request;
+        this.apartment = apartment;
         this.apartmentManager = apartmentManager;
     }
 
     @Override
     public List<String> execute() {
-        List<String>status = apartmentManager.confirmBook(apartmentStatus);
+        status = apartmentManager.answerRequest(request, apartment);
         if (status.size() == 0)
             save();
         return status;

@@ -90,15 +90,13 @@
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
                     <div class="bi-text">
                         <div class="book-list">
-                            <div  th:each="bStatus : ${bStatuses}">
-                                <h6 th:text="#{bookId}"></h6>
-                                <i th:text="${bStatus.getId()}"> </i>
-                                <h6 th:text="#{Username}"></h6>
-                                <span th:text="${bStatus.getUser().getUsername()}"> </span>
-                                <h6 th:text="#{payTimeLimit}"></h6>
-                                <i th:text="${bStatus.getPayTimeLimit()}"> </i>
+                            <div  th:each="request : ${requests}">
+                                <h6 th:text="#{requestId}"></h6>
+                                <i th:text="${request.getId()}"> </i>
+                                <h6 th:text="#{apartment}"></h6>
+                                <a th:href="@{'apartment/'+${request.getAnswerStatus().getApartmentId().toString()}}" class="btn btn-black" th:text="#{see}"></a>
                                 <form th:action="@{/confirmStatus}" method="post">
-                                    <input type="hidden" th:value="${bStatus.getId()}" name="status">
+                                    <input type="hidden" th:value="${request.getId()}" name="status">
                                     <button type="submit" th:text="#{confirmStatus}"></button>
                                 </form>
                             </div>

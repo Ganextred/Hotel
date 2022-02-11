@@ -2342,7 +2342,7 @@ ul, ol {
 }
 
 .book-list{
-	max-height: 70px;
+	max-height: 400px;
 }
 .cont{
 	background: #c7b39b url(static/img/blog-details.jpg);

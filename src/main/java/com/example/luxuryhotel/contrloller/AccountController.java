@@ -5,6 +5,7 @@ import com.example.luxuryhotel.model.UserManager;
 import com.example.luxuryhotel.model.command.BookCommand;
 import com.example.luxuryhotel.model.command.CommandFactory;
 import com.example.luxuryhotel.repository.ApartmentStatusRepository;
+import com.example.luxuryhotel.repository.RequestRepository;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,8 @@ public class AccountController {
     ApartmentStatusRepository apartmentStatusRepo;
     @Autowired
     UserManager userManager;
+    @Autowired
+    RequestRepository requestRepo;
 
 
     @GetMapping("/account")
@@ -39,9 +42,11 @@ public class AccountController {
                 apartmentStatusRepo.findApartmentStatusByUserAndStatusAndPayTimeLimitAfter(user,Status.BOOKED,LocalDateTime.now());
         List<ApartmentStatus> bgStatuses =
                 apartmentStatusRepo.findApartmentStatusByUserAndStatus(user,Status.BOUGHT);
+        List<Request> requests = requestRepo.findByAndAnswerStatusIsNotNull();
         model.addAttribute("user", user);
         model.addAttribute("bStatuses", bStatuses);
         model.addAttribute("bgStatuses", bgStatuses);
+        model.addAttribute("requests", requests);
         return "account";
     }
     @GetMapping("/requestForm")
@@ -50,8 +55,7 @@ public class AccountController {
     }
 
     @PostMapping("/sendRequest")
-    public String sendReuest ( Model model,
-                              @RequestParam(name = "arrivalDay", required=true ) String arrivalDay,
+    public String sendRequest (@RequestParam(name = "arrivalDay", required=true ) String arrivalDay,
                               @RequestParam (name = "endDay", required=true) String endDay,
                               @RequestParam (name = "clazz", required=true) Clazz clazz,
                               @RequestParam (name = "beds", required=true) Integer beds,

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class ApartmentsController {
     @GetMapping("/apartments")
     public String apartments (Model model){
         if (!model.containsAttribute("apartments")) {
-            Iterable<Apartment> apartments = apartmentManager.getDefaultApartments();
+            Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(LocalDate.now().toString(), LocalDate.now().toString());
             model.addAttribute("apartments", apartments);
         }
         return "apartments";
@@ -64,7 +65,7 @@ public class ApartmentsController {
     }
 
     @PostMapping("/apartment/book/{apartment}")
-    public String applySort ( Model model, @PathVariable Apartment apartment,
+    public String applySort ( @PathVariable Apartment apartment,
                              @RequestParam (name = "arrivalDay", required=true ) String arrivalDay,
                              @RequestParam (name = "endDay", required=true) String endDay,
                              RedirectAttributes rA){

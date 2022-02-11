@@ -2,6 +2,7 @@ package com.example.luxuryhotel.model.command;
 
 import com.example.luxuryhotel.entities.Apartment;
 import com.example.luxuryhotel.entities.ApartmentStatus;
+import com.example.luxuryhotel.entities.Request;
 import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.model.ApartmentManager;
 import com.example.luxuryhotel.repository.UserRepository;
@@ -25,4 +26,8 @@ public class CommandFactory {
     public ConfirmBookCommand getConfirmBookCommand (ApartmentStatus apartmentStatus){
         return new ConfirmBookCommand(apartmentStatus,apartmentManager);
     }
+    public AnswerRequestCommand getAnswerRequestCommand (Request request, Apartment apartment){
+        return new AnswerRequestCommand(request, apartment, apartmentManager);
+    }
+
 }
