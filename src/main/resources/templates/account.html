@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Room</title>
 
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
@@ -79,7 +78,7 @@
                                 <span th:text="${bStatus.getUser().getUsername()}"> </span>
                                 <h6 th:text="#{payTimeLimit}"></h6>
                                 <i th:text="${bStatus.getPayTimeLimit()}"> </i>
-                                <a th:href="@{'apartment/'+${bStatus.getApartmentId()}}" class="btn btn-black" th:text="#{see}"></a>
+                                <a th:href="@{'apartment/'(apartment = ${bStatus.getApartmentId().getId()})}" class="btn btn-black" th:text="#{see}"></a>
                             </div>
                             <span class="b-tag" th:text="#{books}"></span>
                         </div>
@@ -95,7 +94,7 @@
                                 <h6 th:text="#{requestId}"></h6>
                                 <i th:text="${request.getId()}"> </i>
                                 <h6 th:text="#{apartment}"></h6>
-                                <a th:href="@{'apartment/'+${request.getAnswerStatus().getApartmentId().getId().toString()}}" class="btn btn-black" th:text="#{see}"></a>
+                                <a th:href="@{'apartment/'(apartment = ${request.getAnswerStatus().getApartmentId().getId().toString()})}" class="btn btn-black" th:text="#{see}"></a>
                                 <form th:action="@{'confirmRequest/'(request = ${request.getId()})}" method="post">
                                     <input type="hidden" th:value="${request.getId()}" name="status">
                                     <button type="submit" th:text="#{confirmStatus}"></button>
@@ -118,7 +117,7 @@
                                 <span th:text="${bgStatus.getArrivalDay()}"> </span>
                                 <h6 th:text="#{endDay}"></h6>
                                 <i th:text="${bgStatus.getEndDay()}"> </i>
-                                <a th:href="@{'apartment/'+${bgStatus.getApartmentId()}}" class="btn btn-black" th:text="#{see}"></a>
+                                <a th:href="@{'apartment/'(apartment = ${bgStatus.getApartmentId().getId()})}" class="btn btn-black" th:text="#{see}"></a>
                             </div>
                             <span class="b-tag" th:text="#{yourRooms}"></span>
                         </div>

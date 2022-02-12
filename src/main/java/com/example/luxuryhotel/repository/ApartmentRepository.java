@@ -1,6 +1,7 @@
 package com.example.luxuryhotel.repository;
 
 import com.example.luxuryhotel.entities.Apartment;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,6 +24,5 @@ public interface ApartmentRepository extends CrudRepository<Apartment, Integer> 
     List<Apartment> findWthStatus (LocalDate arrivalDay, LocalDate endDay,
                                             Boolean needAvailable, Boolean needBooked,
                                             Boolean needBOUGHT, Boolean needInaccessible,
-                                            Sort sort);
-    //(as2.endDay >= ?1 AND as2.arrivalDay <= ?2)
+                                            Pageable pageable);
 }

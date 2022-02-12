@@ -59,9 +59,11 @@ public class AdminController {
     }
 
     @GetMapping("/seeRequest/")
-    public String editUser(Model model, @RequestParam Request request){
+    public String editUser(Model model,@RequestParam(name = "page", required = false, defaultValue = "1" ) Integer page, @RequestParam Request request){
+        if (page <1)
+            page =1;
         if (!model.containsAttribute("apartments")) {
-            apartmentManager.addDefaultModelSortParams(model, request.getArrivalDay().toString(), request.getEndDay().toString());
+            apartmentManager.addDefaultModelSortParams(model, request.getArrivalDay().toString(), request.getEndDay().toString(), page);
 //            Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(request.getArrivalDay().toString(),request.getEndDay().toString());
 //            model.addAttribute("apartments", apartments);
         }
@@ -73,12 +75,13 @@ public class AdminController {
                              @RequestParam(name = "sortParam[]", required=false) String[] sortParams,
                              @RequestParam(name = "orderParam[]") Boolean[] orderParams,
                              RedirectAttributes rA){
+        final Integer page = 1;
         Map<String, Boolean> status = new HashMap<>();
         status.put("AVAILABLE", true);
-        apartmentManager.addModelFlashSortParams(rA,request.getArrivalDay().toString(), request.getEndDay().toString(), sortParams, orderParams, status);
+        apartmentManager.addModelFlashSortParams(rA,request.getArrivalDay().toString(), request.getEndDay().toString(), sortParams, orderParams, status, page);
 //        Iterable <Apartment> apartments = apartmentManager.getSortedApartments(request.getArrivalDay().toString(),request.getEndDay().toString(), sortParams, orderParams, status);
 //        rA.addFlashAttribute("apartments", apartments);
-        return "redirect:/admin/seeRequest/?request="+request.getId().toString();
+        return "redirect:/admin/seeRequest/?request="+request.getId().toString()+"&page="+page.toString();
     }
     @PostMapping("/answerRequest")
     public String answerRequest (@RequestParam(name="request") Request request,

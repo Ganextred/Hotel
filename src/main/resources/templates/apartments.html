@@ -50,8 +50,7 @@
                 <div class="breadcrumb-text">
                     <h2>Our Rooms</h2>
                     <div class="bt-option">
-                        <a href="./home.html">Home</a>
-                        <span>Rooms</span>
+                        <span th:text="#{Page} +': '+${page}"></span>
                     </div>
                 </div>
             </div>
@@ -108,16 +107,15 @@
                             </tr >
                             </tbody>
                         </table>
-                        <a th:href="@{'apartment/'+${apartment.getId()}}" class="primary-btn" th:text="#{moreDetails}"></a>
+                        <a th:href="@{'apartment/'(apartment = ${apartment.getId()})}" class="primary-btn" th:text="#{moreDetails}"></a>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-12">
                 <div class="room-pagination">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">Next <i class="fa fa-long-arrow-right"></i></a>
+                    <a th:if="${page > 1} " th:text="#{prevPage}" th:href="@{'/apartments/'(page = ${page - 1 })}"></a>
+                    <a th:text="#{nextPage}" th:href="@{'/apartments/'(page = ${page + 1})}"></a>
                 </div>
             </div>
         </div>

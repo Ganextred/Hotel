@@ -39,35 +39,38 @@ public class ApartmentsController {
 
 
     @GetMapping("/apartments")
-    public String apartments (Model model){
+    public String apartments (Model model, @RequestParam(name = "page", required = false, defaultValue = "1") Integer page){
+        if (page <1)
+            page =1;
         if (!model.containsAttribute("apartments")) {
             //Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(LocalDate.now().toString(), LocalDate.now().toString());
-            apartmentManager.addDefaultModelSortParams(model, LocalDate.now().toString(), LocalDate.now().toString());
+            apartmentManager.addDefaultModelSortParams(model, LocalDate.now().toString(), LocalDate.now().toString(), page);
             //model.addAttribute("apartments", apartments);
         }
         return "apartments";
     }
     @PostMapping("/apartments/applySort")
-    public String applySort (@RequestParam (name = "arrivalDay", required=false) String arrivalDay,
-                             @RequestParam (name = "endDay", required=false) String endDay,
-                             @RequestParam(name = "sortParam[]", required=false) String[] sortParams,
+    public String applySort (@RequestParam (name = "arrivalDay") String arrivalDay,
+                             @RequestParam (name = "endDay") String endDay,
+                             @RequestParam(name = "sortParam[]") String[] sortParams,
                              @RequestParam(name = "orderParam[]") Boolean[] orderParams,
                              @RequestParam Map <String,Boolean> status,
                              RedirectAttributes rA){
+        final Integer page = 1;
         //Iterable <Apartment> apartments = apartmentManager.getSortedApartments(arrivalDay, endDay, sortParams, orderParams, status);
-        apartmentManager.addModelFlashSortParams(rA,arrivalDay, endDay, sortParams, orderParams, status);
+        apartmentManager.addModelFlashSortParams(rA,arrivalDay, endDay, sortParams, orderParams, status, page);
         // rA.addFlashAttribute("apartments", apartments);
-        return "redirect:/apartments";
+        return "redirect:/apartments?page="+page.toString();
     }
 
-    @GetMapping("apartment/{apartment}")
-    public String editUser(Model model, @PathVariable Apartment apartment){
+    @GetMapping("apartment/")
+    public String apartment(Model model, @RequestParam Apartment apartment){
         model.addAttribute("apartment", apartment);
         return "apartment";
     }
 
-    @PostMapping("/apartment/book/{apartment}")
-    public String applySort ( @PathVariable Apartment apartment,
+    @PostMapping("/apartment/book/")
+    public String applySort ( @RequestParam Apartment apartment,
                              @RequestParam (name = "arrivalDay", required=true ) String arrivalDay,
                              @RequestParam (name = "endDay", required=true) String endDay,
                              RedirectAttributes rA){
@@ -76,7 +79,7 @@ public class ApartmentsController {
         List<String> messages = bc.execute();
         if (messages.size() != 0) {
             rA.addFlashAttribute("messages", messages);
-            return ("redirect:/apartment/"+apartment.getId());
+            return ("redirect:/apartment/?apartment="+apartment.getId());
         } else{
             return "redirect:/apartments";
         }
