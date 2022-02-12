@@ -46,7 +46,7 @@
             <div class="col-lg-10 offset-lg-1">
                 <div class="bd-hero-text">
                     <span th:text="#{welcome}"></span>
-                    <a th:href="@{/requestForm}"><h2 th:text="#{readyToRestLeafeAReaquest}"></h2></a>
+                    <a th:href="@{/requestForm}"><h2 th:text="#{readyToRestLeaveARequest}"></h2></a>
                     <ul>
                         <span class="b-time" th:text="#{goodRest}"><i class="icon_clock_alt"></i></span>
                         <span th:text="${user.getUsername()}"><i class="icon_profile"></i> </span>
@@ -90,7 +90,7 @@
                             <div  th:each="request : ${requests}">
                                 <h6 th:text="#{requestId}"></h6>
                                 <i th:text="${request.getId()}"> </i>
-                                <h6 th:text="#{apartment}"></h6>
+                                <h6 th:text="#{apartmentId}"></h6>
                                 <a th:href="@{'apartment/'(apartment = ${request.getAnswerStatus().getApartmentId().getId().toString()})}" class="btn btn-black" th:text="#{see}"></a>
                                 <form th:action="@{'confirmRequest/'(request = ${request.getId()})}" method="post">
                                     <input type="hidden" th:value="${request.getId()}" name="status">

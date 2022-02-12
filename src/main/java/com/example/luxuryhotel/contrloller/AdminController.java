@@ -64,8 +64,6 @@ public class AdminController {
             page =1;
         if (!model.containsAttribute("apartments")) {
             apartmentManager.addDefaultModelSortParams(model, request.getArrivalDay().toString(), request.getEndDay().toString(), page);
-//            Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(request.getArrivalDay().toString(),request.getEndDay().toString());
-//            model.addAttribute("apartments", apartments);
         }
         model.addAttribute("request",request);
         return "seeRequest";

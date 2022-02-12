@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -108,11 +108,11 @@
                                 <span th:text="${user.getUsername()}"> </span>
                                 <h6 th:text="#{Email}"></h6>
                                 <i th:text="${user.getEmail()}"> </i>
-                                <h6 th:text="#{Roles}"></h6>
+                                <h6 th:text="#{roles}"></h6>
                                 <i th:text="${user.getRoles()}"> </i>
                                 <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black" th:text="#{see}"></a>
                             </div>
-                            <span class="b-tag" th:text="#{users}"></span>
+                            <span class="b-tag" th:text="#{Users}"></span>
                         </div>
                     </div>
                 </div>

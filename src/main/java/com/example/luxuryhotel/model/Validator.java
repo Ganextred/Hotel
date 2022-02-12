@@ -77,33 +77,7 @@ public class Validator {
         }
         return messages;
     }
-//    public List<String> bookApartment(String arrivalDayStr, String endDayStr, Apartment apartment){
-//        List<String> messages=new ArrayList<>();
-//        try{
-//            LocalDate arrivalDateT = LocalDate.parse(arrivalDayStr);
-//            LocalDate endDateT = LocalDate.parse(endDayStr);
-//            if (arrivalDateT.compareTo(endDateT)>0){
-//                messages.add("wrongDayOrder");
-//            }else {
-//                for (ApartmentStatus as: apartment.getApartmentStatuses()){
-//                    if ((as.getArrivalDay().compareTo(endDateT) <= 0 && as.getEndDay().compareTo(arrivalDateT)>=0 &&
-//                            (as.getPayTimeLimit() == null || as.getPayTimeLimit().compareTo(LocalDateTime.now()) >=0))
-//                            || arrivalDateT.compareTo(LocalDate.now()) <=0
-//                            || endDateT.compareTo(LocalDate.now()) <=0){
-//                        messages.add("apartmentNotAvailableOnTime");
-//                        break;
-//                    }
-//                };
-//            }
-//        }catch (DateTimeParseException e){
-//            messages.add("weCantRecognizeDay");
-//            logger.warn("Validator got unparsed arrival or end day");
-//        }catch (NullPointerException e){
-//            messages.add("chooseArrivalOrEndDay");
-//            logger.warn("Validator got null(or 0length) arrival or end day");
-//        }
-//        return messages;
-//    }
+
     public List<String> sendRequest(String arrivalDay, String endDay, Clazz clazz, Integer beds, String wishes){
         List<String> messages = new ArrayList<>();
         if(clazz == null)

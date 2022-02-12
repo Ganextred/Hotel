@@ -23,11 +23,6 @@ public class MainController {
         return "greeting";
     }
 
-//    @RequestMapping("/login")
-//    public String login (Model model){
-//        return "login";
-//    }
-
     @PostMapping("/adduser")
     public String add(@RequestParam(name="username", required=false, defaultValue="World") String username,
                       @RequestParam(name="email", required=false, defaultValue="Fdsf") String email,

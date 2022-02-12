@@ -43,9 +43,7 @@ public class ApartmentsController {
         if (page <1)
             page =1;
         if (!model.containsAttribute("apartments")) {
-            //Iterable<Apartment> apartments = apartmentManager.getDefaultApartments(LocalDate.now().toString(), LocalDate.now().toString());
             apartmentManager.addDefaultModelSortParams(model, LocalDate.now().toString(), LocalDate.now().toString(), page);
-            //model.addAttribute("apartments", apartments);
         }
         return "apartments";
     }
@@ -57,9 +55,7 @@ public class ApartmentsController {
                              @RequestParam Map <String,Boolean> status,
                              RedirectAttributes rA){
         final Integer page = 1;
-        //Iterable <Apartment> apartments = apartmentManager.getSortedApartments(arrivalDay, endDay, sortParams, orderParams, status);
         apartmentManager.addModelFlashSortParams(rA,arrivalDay, endDay, sortParams, orderParams, status, page);
-        // rA.addFlashAttribute("apartments", apartments);
         return "redirect:/apartments?page="+page.toString();
     }
 

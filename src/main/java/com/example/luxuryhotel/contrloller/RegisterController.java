@@ -44,13 +44,20 @@ public class RegisterController {
             rA.addFlashAttribute("message",s);
             return ("redirect:/register");
         }
+
         Set<Role> roles= new HashSet<>();
-        roles.add (Role.USER);
-        user.setActive(true);
-        user.setRoles(roles);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        logger.info("new user was registered, username: " + user.getUsername());
+        roles.add(Role.USER);
+        user.setRoles(roles).setPassword(passwordEncoder.encode(user.getPassword()));
+        try {
+            userRepository.save(user);
+            logger.info("new user was registered, username: " + user.getUsername());
+        } catch (Exception e){
+            s.add("User_already_exist");
+            rA.addFlashAttribute("message",s);
+            return "redirect:/register";
+        }
+
         return ("redirect:/login");
     }
+
 }

@@ -33,33 +33,25 @@ public class User {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public User setId(Integer id) {this.id = id; return this;}
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
-    }
+    public User setUsername(String name) {this.username = name; return this;}
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public User setEmail(String email) {this.email = email; return this;}
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public User setActive(boolean active) {this.active = active; return  this;}
 
     public String getPassword() {
         return password;
@@ -73,7 +65,5 @@ public class User {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    public User setRoles(Set<Role> roles) {this.roles = roles; return this;}
 }
