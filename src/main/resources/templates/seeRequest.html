@@ -96,7 +96,7 @@
         <div class="row">
             <div th:each="apartment : ${apartments}" class="col-lg-4 col-md-6">
                 <div class="room-item">
-                    <img src="/static/img/room/room-details.jpg" alt="img">
+                    <img th:src="'/static/img/room/'+${apartment.getImage()}" alt="img">
                     <div class="ri-text">
                         <h4>Premium King Room</h4>
                         <h3 th:text="${apartment.getPrice()}"><span th:text="#{pricePerNight}"></span></h3>
@@ -124,8 +124,8 @@
 
             <div class="col-lg-12">
                 <div class="room-pagination">
-                    <a th:if="${page > 1} " th:text="#{prevPage}" th:href="@{'/apartments/'(page = ${page - 1 })}"></a>
-                    <a th:text="#{nextPage}" th:href="@{'/apartments/'(page = ${page + 1})}"></a>
+                    <a th:if="${page > 1} " th:text="#{prevPage}" th:href="@{'/admin/seeRequest/'(request = ${request.getId()}, page = ${page - 1 })}"></a>
+                    <a th:text="#{nextPage}" th:href="@{'/admin/seeRequest/'(request = ${request.getId()}, page = ${page + 1})}"></a>
                 </div>
             </div>
         </div>

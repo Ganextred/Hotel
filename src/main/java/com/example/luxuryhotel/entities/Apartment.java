@@ -1,6 +1,7 @@
 package com.example.luxuryhotel.entities;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.List;
 
 @Entity
@@ -70,6 +71,21 @@ public class Apartment {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public String getImage() {
+        List<String> images = getImages();
+        String image = null;
+        for (String path : images){
+            File f = new File(new File("").getAbsolutePath() + "/src/main/resources/static/img/room/" + path);
+            if(f.exists() && f.isFile()) {
+                image = path;
+                break;
+            }
+        }
+        if (image == null)
+            return "defaultRoom.jpg";
+        return image;
     }
 
 }
