@@ -9,10 +9,10 @@
 <body>
 <header class="header">
     <div sec:authorize="isAnonymous()">
-        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
+        <a href="/login"><img class="hbtn" src="../static/img/login.png" alt="login"></a>
     </div>
     <div sec:authorize="isAuthenticated()">
-        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+        <form  th:action="@{/logout}" method="post"> <input type="image" class="hbtn"  src="../static/img/logout.png" alt="logout"> </form>
     </div>
     <input type="image" onclick="show_menu()" class="hbtn" src="../static/img/menu.png" alt="menu">
     <div class="lang_buttons">

@@ -28,11 +28,8 @@
 
 <!--header start-->
 <header class="header">
-    <div sec:authorize="isAnonymous()">
-        <a href="login"><img class="hbtn" src="../static/img/login.png"></a>
-    </div>
     <div sec:authorize="isAuthenticated()">
-        <a href="logout"><img class="hbtn" src="../static/img/logout.png"></a>
+        <form  th:action="@{/logout}" method="post"> <input type="image" class="hbtn"  src="../static/img/logout.png" alt="logout"> </form>
     </div>
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
