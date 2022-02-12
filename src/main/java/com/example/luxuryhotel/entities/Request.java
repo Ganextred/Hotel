@@ -23,7 +23,7 @@ public class Request {
     @Enumerated(EnumType.STRING)
     private Clazz clazz;
     private String text;
-    @OneToOne(cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToOne()
     public ApartmentStatus answerStatus;
 
     public ApartmentStatus getAnswerStatus() {

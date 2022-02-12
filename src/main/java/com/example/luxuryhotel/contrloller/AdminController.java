@@ -39,6 +39,7 @@ public class AdminController {
     public String adminPanel(Model model){
         model.addAttribute("users", userRepo.findAll());
         List<ApartmentStatus> bStatuses = apartmentStatusRepo.findApartmentStatusByStatusAndPayTimeLimitAfter(Status.BOOKED, LocalDateTime.now());
+        bStatuses.addAll(apartmentStatusRepo.findApartmentStatusByStatusAndPayTimeLimitAfter(Status.BOOKEDREQUEST, LocalDateTime.now()));
         List<Request> requests = requestRepo.findByAndAnswerStatusIsNull();
         model.addAttribute("bStatuses", bStatuses);
         model.addAttribute("requests", requests);

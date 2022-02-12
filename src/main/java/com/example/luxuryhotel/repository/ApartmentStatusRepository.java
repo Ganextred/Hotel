@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface ApartmentStatusRepository extends CrudRepository<ApartmentStatus, Integer> {
     @Transactional
-    List<ApartmentStatus> deleteApartmentStatusByPayTimeLimitBeforeOrEndDayBefore(LocalDateTime dateTime, LocalDate localDate);
+    Integer deleteApartmentStatusByPayTimeLimitBeforeOrEndDayBefore(LocalDateTime dateTime, LocalDate localDate);
 
     List<ApartmentStatus> findApartmentStatusByStatusAndPayTimeLimitAfter(Status status, LocalDateTime localDateTime);
     List<ApartmentStatus> findApartmentStatusByUserAndStatusAndPayTimeLimitAfter(User user,Status status, LocalDateTime localDateTime);

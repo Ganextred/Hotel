@@ -72,11 +72,13 @@
                             <div  th:each="bStatus : ${bStatuses}">
                                 <h6 th:text="#{bookId}"></h6>
                                 <i th:text="${bStatus.getId()}"> </i>
+                                <h6 th:text="#{bookType}"></h6>
+                                <i th:text="#{${bStatus.getStatus()}}"> </i>
                                 <h6 th:text="#{Username}"></h6>
                                 <span th:text="${bStatus.getUser().getUsername()}"> </span>
                                 <h6 th:text="#{payTimeLimit}"></h6>
                                 <i th:text="${bStatus.getPayTimeLimit()}"> </i>
-                                <form th:action="@{confirmStatus}" method="post">
+                                <form th:if="${bStatus.getStatus().toString.equals('BOOKED')}" th:action="@{confirmStatus}" method="post">
                                     <input type="hidden" th:value="${bStatus.getId()}" name="status">
                                     <button type="submit" th:text="#{confirmStatus}"></button>
                                 </form>

@@ -31,7 +31,7 @@ public class BookCommand implements  Command{
 
     @Override
     public List<String> execute() {
-        Pair<List<String>,ApartmentStatus> bookResult = apartmentManager.book(arrivalDay,endDay,user,apartment);
+        Pair<List<String>,ApartmentStatus> bookResult = apartmentManager.book(arrivalDay,endDay,user,apartment, false);
         status = bookResult.getFirst();
         resultAS = bookResult.getSecond();
         if (status.size() == 0)

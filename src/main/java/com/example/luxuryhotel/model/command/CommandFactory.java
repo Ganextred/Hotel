@@ -29,5 +29,8 @@ public class CommandFactory {
     public AnswerRequestCommand getAnswerRequestCommand (Request request, Apartment apartment){
         return new AnswerRequestCommand(request, apartment, apartmentManager);
     }
+    public ConfirmRequestCommand getConfirmRequestCommand (Request request){
+        return new ConfirmRequestCommand(request, apartmentManager);
+    }
 
 }

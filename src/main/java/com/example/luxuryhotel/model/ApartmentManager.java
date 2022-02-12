@@ -100,18 +100,20 @@ public class ApartmentManager {
     }
 
     @Transactional
-    public Pair<List<String>, ApartmentStatus> book(String arrivalDay, String endDay, User user, Apartment apartment) {
+    public Pair<List<String>, ApartmentStatus> book(String arrivalDay, String endDay, User user, Apartment apartment, boolean forRequest) {
+        Status bookTypeStatus = forRequest?Status.BOOKEDREQUEST:Status.BOOKED;
         List<String> status = valid.bookApartment(arrivalDay,endDay,apartment);
         ApartmentStatus apartmentStatus = new ApartmentStatus();
         if (status.size()==0){
             apartmentStatus =
                     new ApartmentStatus(apartment,user,LocalDate.parse(arrivalDay),LocalDate.parse(endDay),
-                           LocalDateTime.now().plusDays(2), Status.BOOKED);
+                           LocalDateTime.now().plusDays(2), bookTypeStatus);
             apartmentStatusRepo.save(apartmentStatus);
         }
-
         return Pair.of(status, apartmentStatus);
     }
+
+
     @Transactional
     public List<String> confirmBook(ApartmentStatus apartmentStatus) {
         List<String> status = new ArrayList<>();
@@ -122,8 +124,18 @@ public class ApartmentManager {
     }
 
     @Transactional
+    public List<String> confirmRequest(Request request) {
+        List<String> status = new ArrayList<>();
+        request.getAnswerStatus().setStatus(Status.BOOKED);
+        request.getAnswerStatus().setPayTimeLimit(LocalDateTime.now().plusDays(2));
+        apartmentStatusRepo.save(request.getAnswerStatus());
+        requestRepo.delete(request);
+        return status;
+    }
+
+    @Transactional
     public List<String> answerRequest(Request request, Apartment apartment) {
-        Pair<List<String>,ApartmentStatus> bookResult = book(request.getArrivalDay().toString(), request.getEndDay().toString(), request.getUserId(), apartment);
+        Pair<List<String>,ApartmentStatus> bookResult = book(request.getArrivalDay().toString(), request.getEndDay().toString(), request.getUserId(), apartment, true);
         List<String> status = bookResult.getFirst();
         ApartmentStatus apartmentStatus = bookResult.getSecond();
         if (status.size()==0){

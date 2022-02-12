@@ -86,6 +86,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-2.jpg">
                     <div class="bi-text">
@@ -94,8 +95,8 @@
                                 <h6 th:text="#{requestId}"></h6>
                                 <i th:text="${request.getId()}"> </i>
                                 <h6 th:text="#{apartment}"></h6>
-                                <a th:href="@{'apartment/'+${request.getAnswerStatus().getApartmentId().toString()}}" class="btn btn-black" th:text="#{see}"></a>
-                                <form th:action="@{/confirmStatus}" method="post">
+                                <a th:href="@{'apartment/'+${request.getAnswerStatus().getApartmentId().getId().toString()}}" class="btn btn-black" th:text="#{see}"></a>
+                                <form th:action="@{'confirmRequest/'(request = ${request.getId()})}" method="post">
                                     <input type="hidden" th:value="${request.getId()}" name="status">
                                     <button type="submit" th:text="#{confirmStatus}"></button>
                                 </form>
@@ -105,6 +106,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 col-md-6">
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
                     <div class="bi-text">

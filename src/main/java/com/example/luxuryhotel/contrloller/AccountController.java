@@ -2,8 +2,10 @@ package com.example.luxuryhotel.contrloller;
 
 import com.example.luxuryhotel.entities.*;
 import com.example.luxuryhotel.model.UserManager;
+import com.example.luxuryhotel.model.command.AnswerRequestCommand;
 import com.example.luxuryhotel.model.command.BookCommand;
 import com.example.luxuryhotel.model.command.CommandFactory;
+import com.example.luxuryhotel.model.command.ConfirmRequestCommand;
 import com.example.luxuryhotel.repository.ApartmentStatusRepository;
 import com.example.luxuryhotel.repository.RequestRepository;
 import com.example.luxuryhotel.repository.UserRepository;
@@ -32,6 +34,8 @@ public class AccountController {
     UserManager userManager;
     @Autowired
     RequestRepository requestRepo;
+    @Autowired
+    CommandFactory commandFactory;
 
 
     @GetMapping("/account")
@@ -69,5 +73,16 @@ public class AccountController {
         } else{
             return "redirect:/account";
         }
+    }
+
+    @PostMapping("/confirmRequest/")
+    public String confirmRequest(Model model, @RequestParam Request request){
+        ConfirmRequestCommand command = commandFactory.getConfirmRequestCommand(request);
+        List<String> messages = command.execute();
+        if (messages.size() != 0) {
+            System.out.println(messages);
+            return "redirect:/admin/seeRequest/?request=" + request.getId().toString();
+        }
+        return "redirect:/account";
     }
 }
