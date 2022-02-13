@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Room</title>
 
-
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
@@ -38,10 +38,10 @@
     </div>
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="../static/img/lang.png" alt="lang">
+        <script>
+            function swap_len(){$.get('/lang',function (data){location.reload()})}
+        </script>
     </div>
-    <script>
-        function swap_len(){$.get('/lang',function (data){location.reload()})}
-    </script>
 </header>
 <!--header end-->
 
