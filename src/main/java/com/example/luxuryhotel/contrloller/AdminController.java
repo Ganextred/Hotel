@@ -78,11 +78,13 @@ public class AdminController {
         return "seeRequest";
     }
     @PostMapping("/seeRequest/applySort")
-    public String applySort (@RequestParam(name="request") Request request,
+    public String applySort (@RequestParam (name = "page", required = false, defaultValue = "1") Integer page,
+                             @RequestParam(name="request") Request request,
                              @RequestParam(name = "sortParam[]", required=false) String[] sortParams,
                              @RequestParam(name = "orderParam[]") Boolean[] orderParams,
                              RedirectAttributes rA){
-        final Integer page = 1;
+        if (page <1)
+            page =1;
         Map<String, Boolean> status = new HashMap<>();
         status.put("AVAILABLE", true);
         apartmentManager.addModelFlashSortParams(rA,request.getArrivalDay().toString(), request.getEndDay().toString(), sortParams, orderParams, status, page);

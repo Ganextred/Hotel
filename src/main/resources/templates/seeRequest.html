@@ -79,7 +79,7 @@
     <div class="container">
         <div>
             <p th:text="#{sort}"></p>
-            <form th:action="@{'applySort'}" method="post">
+            <form th:action="@{'applySort'}" method="post" id="applySort">
                 <input type="hidden" name ="request" th:value="${request.getId()}">
                 <label th:each="i: ${#numbers.sequence(0,2)}">
                     <select name = "sortParam[]">
@@ -127,8 +127,10 @@
 
             <div class="col-lg-12">
                 <div class="room-pagination">
-                    <a th:if="${page > 1} " th:text="#{prevPage}" th:href="@{'/admin/seeRequest/'(request = ${request.getId()}, page = ${page - 1 })}"></a>
-                    <a th:text="#{nextPage}" th:href="@{'/admin/seeRequest/'(request = ${request.getId()}, page = ${page + 1})}"></a>
+                    <div class="room-pagination">
+                        <button th:if="${page > 1}" type="submit" th:text="#{prevPage}" name="page" th:value="${page - 1}" form="applySort"></button>
+                        <button  type="submit" th:text="#{nextPage}" name="page" th:value="${page + 1}" form="applySort"></button>
+                    </div>
                 </div>
             </div>
         </div>

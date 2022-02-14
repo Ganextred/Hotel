@@ -1203,7 +1203,7 @@ ul, ol {
 	text-align: center;
 	padding-top: 20px;
 }
-.room-pagination a {
+.room-pagination a,button {
 	font-size: 16px;
 	color: #707079;
 	border: 1px solid #EFD4B9;
@@ -1215,10 +1215,10 @@ ul, ol {
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
 }
-.room-pagination a:last-child {
+.room-pagination a,button:last-child {
 	margin-right: 0;
 }
-.room-pagination a:hover {
+.room-pagination a,button:hover {
 	background: #dfa974;
 	color: #ffffff;
 }

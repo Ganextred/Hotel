@@ -65,7 +65,7 @@
     <div class="container">
         <div>
             <p th:text="#{sort}"></p>
-            <form th:action="@{'/apartments/applySort'}" method="post">
+            <form th:action="@{'/apartments/applySort'}" method="post" id="applySort">
                 <div>
                     <input type = "date" name="arrivalDay" th:text="#{arrivalDay}" required th:value="${arrivalDayD}">
                     <input type = "date" name = "endDay" th:text="#{endDay}" th:value="${endDayD}" required>
@@ -117,8 +117,8 @@
 
             <div class="col-lg-12">
                 <div class="room-pagination">
-                    <a th:if="${page > 1} " th:text="#{prevPage}" th:href="@{'/apartments/'(page = ${page - 1 })}"></a>
-                    <a th:text="#{nextPage}" th:href="@{'/apartments/'(page = ${page + 1})}"></a>
+                    <button  th:if="${page > 1}" type="submit" th:text="#{prevPage}" name="page" th:value="${page - 1}" form="applySort"></button>
+                    <button  type="submit" th:text="#{nextPage}" name="page" th:value="${page + 1}" form="applySort"></button>
                 </div>
             </div>
         </div>

@@ -48,13 +48,15 @@ public class ApartmentsController {
         return "apartments";
     }
     @PostMapping("/apartments/applySort")
-    public String applySort (@RequestParam (name = "arrivalDay") String arrivalDay,
+    public String applySort (@RequestParam (name = "page", required = false, defaultValue = "1") Integer page,
+                             @RequestParam (name = "arrivalDay") String arrivalDay,
                              @RequestParam (name = "endDay") String endDay,
                              @RequestParam(name = "sortParam[]") String[] sortParams,
                              @RequestParam(name = "orderParam[]") Boolean[] orderParams,
                              @RequestParam Map <String,Boolean> status,
                              RedirectAttributes rA){
-        final Integer page = 1;
+        if (page <1)
+            page =1;
         apartmentManager.addModelFlashSortParams(rA,arrivalDay, endDay, sortParams, orderParams, status, page);
         return "redirect:/apartments?page="+page.toString();
     }
