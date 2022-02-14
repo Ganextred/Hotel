@@ -78,6 +78,18 @@ public class Validator {
         return messages;
     }
 
+    //добавить в ресурс бандл
+    public List<String> updateApartment(Integer price, Clazz clazz, Integer beds){
+        List<String> messages = new ArrayList<>();
+        if(clazz == null)
+            messages.add("choseClazz");
+        if(beds == null || beds < 0)
+            messages.add("incorrectBeds");
+        if(price == null || price< 0)
+            messages.add("incorrectPrice");
+        return messages;
+    }
+
     public List<String> sendRequest(String arrivalDay, String endDay, Clazz clazz, Integer beds, String wishes){
         List<String> messages = new ArrayList<>();
         if(clazz == null)

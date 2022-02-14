@@ -1,5 +1,7 @@
 package com.example.luxuryhotel.entities;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.io.File;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 @Entity
 public class Apartment {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
     private Integer price;
     private Integer beds;
@@ -45,24 +47,26 @@ public class Apartment {
         return price;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public Apartment setPrice(Integer price) {
+        this.price = price; return this;
     }
 
     public Integer getBeds() {
         return beds;
     }
 
-    public void setBeds(Integer beds) {
+    public Apartment setBeds(Integer beds) {
         this.beds = beds;
+        return this;
     }
 
     public Clazz getClazz() {
         return clazz;
     }
 
-    public void setClazz(Clazz clazz) {
+    public Apartment setClazz(Clazz clazz) {
         this.clazz = clazz;
+        return this;
     }
 
     public List<String> getImages() {
@@ -87,5 +91,6 @@ public class Apartment {
             return "defaultRoom.jpg";
         return image;
     }
+
 
 }

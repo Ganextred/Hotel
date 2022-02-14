@@ -24,6 +24,13 @@
     <link rel="stylesheet" href="../static/css/sona/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="../static/css/sona/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/sona/style.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/user-edit.css" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </head>
 
 <!--header start-->
@@ -57,6 +64,33 @@
     </div>
 </div>
 <!-- Breadcrumb Section End -->
+
+<form th:action="@{'/admin/editUser'}" method="post" id="editUserForm"></form>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th th:text="id"></th>
+        <th th:text="#{Username}"></th>
+        <th th:text="#{Email}"></th>
+        <th th:text="#{roles}"></th>
+        <th th:text="#{save}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getId()}"> <input type="hidden" name="userId" form="editUserForm" th:value="${user.getId()}"> </td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td>
+            <label th:each="role : ${existingRoles}" >
+            <input th:if="${role.name() != 'USER'}" type = "checkbox"  th:name="${role}" form="editUserForm" th:text="${role}"
+                   th:checked="${user.getRoles().contains(role)}" >
+            </label>
+        </td>
+        <td><button type=submit form="editUserForm" class="view" title="" data-toggle="tooltip" data-original-title="View Details"><i class="material-icons"></i></button></td>
+    </tr>
+    </tbody>
+</table>
 
 <!-- Blog Section Begin -->
 <section class="blog-section blog-page spad">
@@ -103,16 +137,15 @@
                 <div class="blog-item set-bg" data-setbg="img/blog/blog-3.jpg">
                     <div class="bi-text">
                         <div class="book-list">
-                            <div  th:each="user : ${users}">
-                                <h6 th:text="#{Username}"></h6>
-                                <span th:text="${user.getUsername()}"> </span>
-                                <h6 th:text="#{Email}"></h6>
-                                <i th:text="${user.getEmail()}"> </i>
-                                <h6 th:text="#{roles}"></h6>
-                                <i th:text="${user.getRoles()}"> </i>
-                                <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black" th:text="#{see}"></a>
+                            <div  th:each="apartment : ${apartments}">
+                                <h6 th:text="#{apartmentId}"></h6>
+                                <span th:text="${apartment.getId()}"> </span>
+                                <a th:href="@{'/admin/editApartment/'(apartment = ${apartment.getId()})}" class="btn btn-black" th:text="#{see}"></a>
                             </div>
-                            <span class="b-tag" th:text="#{Users}"></span>
+                            <form th:action="@{newApartment}" method="post">
+                                <button type="submit" th:text="#{newApartment}"></button>
+                            </form>
+                            <span class="b-tag" th:text="#{apartments}"></span>
                         </div>
                     </div>
                 </div>
@@ -121,6 +154,18 @@
     </div>
 </section>
 <!-- Blog Section End -->
+
+
+<!--<div  th:each="user : ${users}">-->
+<!--    <h6 th:text="#{Username}"></h6>-->
+<!--    <span th:text="${user.getUsername()}"> </span>-->
+<!--    <h6 th:text="#{Email}"></h6>-->
+<!--    <i th:text="${user.getEmail()}"> </i>-->
+<!--    <h6 th:text="#{roles}"></h6>-->
+<!--    <i th:text="${user.getRoles()}"> </i>-->
+<!--    <a th:href="@{'editUser/'+${user.getId()}}" class="btn btn-black" th:text="#{see}"></a>-->
+<!--</div>-->
+<!--<span class="b-tag" th:text="#{Users}"></span>-->
 
 </body>
 </html>

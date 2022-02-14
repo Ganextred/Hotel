@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Room</title>
+
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/sona/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/faticon.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/sona/style.css" type="text/css">
+</head>
+
+<body>
+
+<!--header start-->
+<header class="header">
+    <div sec:authorize="isAnonymous()">
+        <a href="/login"><img class="hbtn" src="/static/img/login.png" alt="login"></a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form  th:action="@{/logout}" method="post"> <input type="image" class="hbtn"  src="/static/img/logout.png" alt="logout"> </form>
+    </div>
+    <div class="lang_buttons">
+        <input type="image" onclick="swap_len()" class="hbtn" src="/static/img/lang.png" alt="lang">
+        <script>
+            function swap_len(){$.get('/lang',function (data){location.reload()})}
+        </script>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <form  th:action="@{/account}" method="get"> <input type="image" class="hbtn"  src="/static/img/account.png" alt="account"> </form>
+    </div>
+</header>
+<!--header end-->
+
+<!-- Breadcrumb Section Begin -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <h2>Our Rooms</h2>
+                    <div class="bt-option">
+                        <a href="./home.html">Home</a>
+                        <span>Rooms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Room Details Section Begin -->
+<section class="room-details-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="room-details-item">
+                    <img th:each="image : ${apartment.getImages()}" th:src="'/static/img/room/'+${image}" alt="img">
+                    <div class="rd-text">
+                        <div class="rd-title">
+                            <h3>Premium King Room</h3>
+                        </div>
+                        <h2 th:text="${apartment.getPrice()}"><span th:text="#{pricePerNight}"></span></h2>
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td class="r-o" th:text="#{capacity}" ></td>
+                                <td th:text="${apartment.getBeds()}"> </td>
+                            </tr>
+                            <tr>
+                                <td class="r-o" th:text="#{clazz} + ':'"></td>
+                                <td th:text="${apartment.getClazz()}"></td>
+                            </tr >
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="room-booking">
+                    <div class="err-message" th:each="message : ${messages}">
+                        <!--/*@thymesVar id="message" type="message"*/-->
+                        <span th:text="#{${message}}"> </span>
+                    </div>
+                    <form th:action="@{'/admin/editApartment/save/'(apartment = ${apartment.getId()})}" method="post" enctype="multipart/form-data">
+                        <p th:text="#{price}"></p>
+                        <label>
+                            <input name = "price" type="number" th:value="${apartment.getPrice()}" required>
+                        </label>
+                        <p th:text="#{beds}"></p>
+                        <label>
+                            <input name = "beds" type="number" th:value="${apartment.getBeds()}" required>
+                        </label>
+                        <p th:text="#{choseImage}"></p>
+                        <input type="file" accept="image/jpeg" name="image">
+                        <label>
+                            <select name = "clazz">
+                                <option value="ECONOMY"  th:text="#{ECONOMY}" th:selected="${apartment.getClazz().toString().equals('ECONOMY')}">
+                                <option value="STANDARD"  th:text="#{STANDARD}" th:selected="${apartment.getClazz().toString().equals('STANDARD')}">
+                                <option value="LUX"  th:text="#{LUX}" th:selected="${apartment.getClazz().toString().equals('LUX')}" >
+                            </select>
+                        </label>
+                        <button type="submit" th:text="#{save}"></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{'/admin/editApartment/delete/'(apartment = ${apartment.getId()})}" method="post" enctype="multipart/form-data">
+            <button type="submit" th:text="#{delete}"></button>
+        </form>
+    </div>
+</section>
+<!-- Room Details Section End -->
+</body>>
+</html>

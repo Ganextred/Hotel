@@ -15,9 +15,12 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -150,6 +153,46 @@ public class ApartmentManager {
                 requestRepo.save(request);
         }
         return status;
+    }
+
+    @Transactional
+    public List<String> updateApartment(Apartment apartment, Integer price, Clazz clazz, Integer beds, MultipartFile file) {
+        List<String> status = valid.updateApartment(price,clazz,beds);
+        if (status.size()==0){
+            try {
+                if (!file.isEmpty()){
+                    file.transferTo(new File(new File("").getAbsolutePath()+ "/src/main/resources/static/img/room/room-"
+                            +apartment.getId()+'-'+apartment.getImages().size()));
+                    apartment.getImages().add("room-" + apartment.getId().toString()+'-'+apartment.getImages().size());
+                }
+                apartment.setBeds(beds);
+                apartment.setClazz(clazz);
+                apartment.setPrice(price);
+                apartmentRepo.save(apartment);
+            } catch (IOException | IllegalStateException e) {
+                status.add("problemsWithFile");
+            }
+        }
+        return status;
+    }
+
+    @Transactional
+    public Apartment newApartment(){
+        List<String> messages = new ArrayList<>();
+        Apartment apartment = new Apartment();
+        apartment.setPrice(9999).setBeds(1).setClazz(Clazz.LUX);
+        return apartmentRepo.save(apartment);
+    }
+
+    @Transactional
+    public void deleteApartment(Apartment apartment) {
+        apartmentRepo.delete(apartment);
+        List<String> images = apartment.getImages();
+        for (String image: images) {
+            File file = new File((new File("").getAbsolutePath() + "/src/main/resources/static/img/room/" + image));
+            if (!file.delete())
+                logger.warn("Room image wasn`t found in file system");
+        }
     }
 
 

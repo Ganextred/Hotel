@@ -41,6 +41,9 @@
             function swap_len(){$.get('/lang',function (data){location.reload()})}
         </script>
     </div>
+    <div sec:authorize="isAuthenticated()">
+        <form  th:action="@{/account}" method="get"> <input type="image" class="hbtn"  src="../static/img/account.png" alt="account"> </form>
+    </div>
 </header>
 <!--header end-->
 
