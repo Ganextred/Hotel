@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,6 +23,8 @@ import java.util.Locale;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    UserDetailsService userDetailsService;
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -31,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/register", "/static/**", "/lang").permitAll()
+                .antMatchers("/", "/apartments", "/apartment/", "/register", "/static/**", "/lang").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -44,10 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(encoder())
-                .usersByUsernameQuery("select username, password, active from usr where username=?")
-                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .passwordEncoder(encoder())
+//                .usersByUsernameQuery("select username, password, active from usr where username=?")
+//                .authoritiesByUsernameQuery("select u.username, ur.roles from usr u inner join user_role ur on u.id = ur.user_id where u.username=?");
     }
 }

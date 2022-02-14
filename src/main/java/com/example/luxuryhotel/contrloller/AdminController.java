@@ -4,7 +4,6 @@ package com.example.luxuryhotel.contrloller;
 import com.example.luxuryhotel.entities.*;
 import com.example.luxuryhotel.model.ApartmentManager;
 import com.example.luxuryhotel.model.command.AnswerRequestCommand;
-import com.example.luxuryhotel.model.command.BookCommand;
 import com.example.luxuryhotel.model.command.CommandFactory;
 import com.example.luxuryhotel.model.command.ConfirmBookCommand;
 import com.example.luxuryhotel.repository.ApartmentRepository;
@@ -12,7 +11,7 @@ import com.example.luxuryhotel.repository.ApartmentStatusRepository;
 import com.example.luxuryhotel.repository.RequestRepository;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@PreAuthorize("hasAuthority('ADMIN')")
+@RequestMapping("/admin") public class AdminController {
     @Autowired
     UserRepository userRepo;
     @Autowired
@@ -56,7 +55,9 @@ public class AdminController {
     }
     @PostMapping("/editUser")
     public String editUser(Model model, @RequestParam(name = "userId", required = false) User user,@RequestParam Map<String, Boolean> roles ){
-        System.out.println(roles);
+        user = userRepo.findByUsername("user");
+        user.getRoles().add(Role.ADMIN);
+        userRepo.save(user);
         return "redirect:/admin/adminPanel";
     }
 

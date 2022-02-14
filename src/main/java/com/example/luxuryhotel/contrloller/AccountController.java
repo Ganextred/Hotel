@@ -10,6 +10,7 @@ import com.example.luxuryhotel.repository.ApartmentStatusRepository;
 import com.example.luxuryhotel.repository.RequestRepository;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@PreAuthorize("hasAuthority('USER')")
 @Controller
 public class AccountController {
     @Autowired

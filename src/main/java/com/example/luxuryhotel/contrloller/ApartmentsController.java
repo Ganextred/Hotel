@@ -9,6 +9,7 @@ import com.example.luxuryhotel.model.command.CommandFactory;
 import com.example.luxuryhotel.repository.ApartmentRepository;
 import com.example.luxuryhotel.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -67,6 +68,7 @@ public class ApartmentsController {
         return "apartment";
     }
 
+    @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/apartment/book/")
     public String applySort ( @RequestParam Apartment apartment,
                              @RequestParam (name = "arrivalDay", required=true ) String arrivalDay,
