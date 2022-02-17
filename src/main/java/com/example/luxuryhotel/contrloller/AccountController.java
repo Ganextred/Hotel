@@ -1,14 +1,12 @@
 package com.example.luxuryhotel.contrloller;
 
 import com.example.luxuryhotel.entities.*;
-import com.example.luxuryhotel.model.UserManager;
-import com.example.luxuryhotel.model.command.AnswerRequestCommand;
-import com.example.luxuryhotel.model.command.BookCommand;
+import com.example.luxuryhotel.model.service.UserManager;
 import com.example.luxuryhotel.model.command.CommandFactory;
 import com.example.luxuryhotel.model.command.ConfirmRequestCommand;
-import com.example.luxuryhotel.repository.ApartmentStatusRepository;
-import com.example.luxuryhotel.repository.RequestRepository;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.luxuryhotel.model.repository.ApartmentStatusRepository;
+import com.example.luxuryhotel.model.repository.RequestRepository;
+import com.example.luxuryhotel.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -16,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -82,7 +79,6 @@ public class AccountController {
         ConfirmRequestCommand command = commandFactory.getConfirmRequestCommand(request);
         List<String> messages = command.execute();
         if (messages.size() != 0) {
-            System.out.println(messages);
             return "redirect:/admin/seeRequest/?request=" + request.getId().toString();
         }
         return "redirect:/account";

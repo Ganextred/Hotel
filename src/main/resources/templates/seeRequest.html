@@ -29,11 +29,14 @@
 <body>
 <!--header start-->
 <header class="header">
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <h2 > <a href="/admin/adminPanel" class="tbtn"  ><p th:text="#{ADMIN}" style="position: relative; top: -4px;"/> </a></h2>
+    </div>
     <div sec:authorize="isAnonymous()">
-        <a href="/login"><img class="hbtn" src="../static/img/login.png" alt="login"></a>
+        <a href="/login"><img class="hbtn" src="/static/img/login.png" alt="login"></a>
     </div>
     <div sec:authorize="isAuthenticated()">
-        <form  th:action="@{/logout}" method="post"> <input type="image" class="hbtn"  src="../static/img/logout.png" alt="logout"> </form>
+        <form  th:action="@{/logout}" method="post"> <input type="image" class="hbtn"  src="/static/img/logout.png" alt="logout"> </form>
     </div>
     <div class="lang_buttons">
         <input type="image" onclick="swap_len()" class="hbtn" src="/static/img/lang.png" alt="lang">
@@ -42,7 +45,7 @@
         </script>
     </div>
     <div sec:authorize="isAuthenticated()">
-        <form  th:action="@{/account}" method="get"> <input type="image" class="hbtn"  src="../static/img/account.png" alt="account"> </form>
+        <form  th:action="@{/account}" method="get"> <input type="image" class="hbtn"  src="/static/img/account.png" alt="account"> </form>
     </div>
 </header>
 <!--header end-->

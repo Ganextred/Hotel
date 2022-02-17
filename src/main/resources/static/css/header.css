@@ -12,6 +12,17 @@
     display: inline-block;
 
 }
+.tbtn{
+    height: 30px;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    margin: 2px;
+    background-color: #ffffff;
+    border-radius:30%;
+    left:-100%;
+    float: right
+}
 .hbtn{
     width: 30px;
     height: 30px;

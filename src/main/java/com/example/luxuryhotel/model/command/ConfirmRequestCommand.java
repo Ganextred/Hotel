@@ -1,8 +1,7 @@
 package com.example.luxuryhotel.model.command;
 
-import com.example.luxuryhotel.entities.Apartment;
 import com.example.luxuryhotel.entities.Request;
-import com.example.luxuryhotel.model.ApartmentManager;
+import com.example.luxuryhotel.model.service.ApartmentManager;
 
 import java.util.List;
 

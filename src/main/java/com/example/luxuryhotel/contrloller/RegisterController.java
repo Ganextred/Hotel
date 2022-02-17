@@ -2,8 +2,8 @@ package com.example.luxuryhotel.contrloller;
 
 import com.example.luxuryhotel.entities.Role;
 import com.example.luxuryhotel.entities.User;
-import com.example.luxuryhotel.model.Validator;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.luxuryhotel.model.service.Validator;
+import com.example.luxuryhotel.model.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

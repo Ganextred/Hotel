@@ -1,10 +1,10 @@
-package com.example.luxuryhotel.model;
+package com.example.luxuryhotel.model.service;
 
 import com.example.luxuryhotel.entities.Apartment;
 import com.example.luxuryhotel.entities.ApartmentStatus;
 import com.example.luxuryhotel.entities.Clazz;
 import com.example.luxuryhotel.entities.User;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.luxuryhotel.model.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,7 +78,6 @@ public class Validator {
         return messages;
     }
 
-    //добавить в ресурс бандл
     public List<String> updateApartment(Integer price, Clazz clazz, Integer beds){
         List<String> messages = new ArrayList<>();
         if(clazz == null)

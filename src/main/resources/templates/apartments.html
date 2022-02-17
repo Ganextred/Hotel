@@ -29,6 +29,9 @@
 <body>
 <!--header start-->
 <header class="header">
+    <div sec:authorize="hasAuthority('ADMIN')">
+        <h2 > <a href="/admin/adminPanel" class="tbtn"  ><p th:text="#{ADMIN}" style="position: relative; top: -4px;"/> </a></h2>
+    </div>
     <div sec:authorize="isAnonymous()">
         <a href="/login"><img class="hbtn" src="../static/img/login.png" alt="login"></a>
     </div>

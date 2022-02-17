@@ -1,4 +1,4 @@
-package com.example.luxuryhotel.repository;
+package com.example.luxuryhotel.model.repository;
 
 import com.example.luxuryhotel.entities.ApartmentStatus;
 import com.example.luxuryhotel.entities.Status;

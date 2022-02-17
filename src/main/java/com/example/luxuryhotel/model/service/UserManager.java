@@ -1,10 +1,10 @@
-package com.example.luxuryhotel.model;
+package com.example.luxuryhotel.model.service;
 
 import com.example.luxuryhotel.entities.Clazz;
 import com.example.luxuryhotel.entities.Request;
 import com.example.luxuryhotel.entities.User;
-import com.example.luxuryhotel.repository.RequestRepository;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.luxuryhotel.model.repository.RequestRepository;
+import com.example.luxuryhotel.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

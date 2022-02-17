@@ -1,9 +1,9 @@
 package com.example.luxuryhotel.model;
 
-import org.apache.catalina.core.ApplicationContext;
+
+import com.example.luxuryhotel.model.service.Validator;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,9 +30,10 @@ class ValidatorTest {
     void nullUsername() {
         assertFalse (valid.userName(null));
     }
+    @Test
     void validUsername() {
-        assertTrue (valid.email("Jhon"));
-        assertTrue (valid.email("123_HjonF_fd"));
+        assertTrue (valid.userName("Jhon"));
+        assertTrue (valid.userName("123_HjonF_fd"));
     }
     @Test
     void invalidUsername() {
@@ -42,4 +43,5 @@ class ValidatorTest {
         assertFalse (valid.email("Jhon."));
         assertFalse (valid.email("Jhon$"));
     }
+
 }

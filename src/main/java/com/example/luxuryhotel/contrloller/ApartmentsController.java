@@ -1,17 +1,14 @@
 package com.example.luxuryhotel.contrloller;
 
 import com.example.luxuryhotel.entities.Apartment;
-import com.example.luxuryhotel.entities.User;
-import com.example.luxuryhotel.model.ApartmentManager;
-import com.example.luxuryhotel.model.Validator;
+import com.example.luxuryhotel.model.service.ApartmentManager;
+import com.example.luxuryhotel.model.service.Validator;
 import com.example.luxuryhotel.model.command.BookCommand;
 import com.example.luxuryhotel.model.command.CommandFactory;
-import com.example.luxuryhotel.repository.ApartmentRepository;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.luxuryhotel.model.repository.ApartmentRepository;
+import com.example.luxuryhotel.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

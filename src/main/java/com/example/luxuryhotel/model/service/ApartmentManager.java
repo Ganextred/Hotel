@@ -1,11 +1,11 @@
-package com.example.luxuryhotel.model;
+package com.example.luxuryhotel.model.service;
 
 
 import com.example.luxuryhotel.entities.*;
-import com.example.luxuryhotel.repository.ApartmentRepository;
-import com.example.luxuryhotel.repository.ApartmentStatusRepository;
-import com.example.luxuryhotel.repository.RequestRepository;
-import com.example.luxuryhotel.repository.UserRepository;
+import com.example.luxuryhotel.model.repository.ApartmentRepository;
+import com.example.luxuryhotel.model.repository.ApartmentStatusRepository;
+import com.example.luxuryhotel.model.repository.RequestRepository;
+import com.example.luxuryhotel.model.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -43,6 +43,8 @@ public class ApartmentManager {
     RequestRepository requestRepo;
     @Autowired
     Validator valid;
+    @Autowired
+    CookieManager cookieManager;
 
     private final static Integer pageCapacity = 9;
     private final static Logger logger = Logger.getLogger(ApartmentManager.class);
@@ -119,6 +121,7 @@ public class ApartmentManager {
                     new ApartmentStatus(apartment,user,LocalDate.parse(arrivalDay),LocalDate.parse(endDay),
                            LocalDateTime.now().plusDays(2), bookTypeStatus);
             apartmentStatusRepo.save(apartmentStatus);
+            sendBill(user.getEmail()+"dfsfs",apartment.getPrice());
         }
         return Pair.of(status, apartmentStatus);
     }
@@ -195,14 +198,42 @@ public class ApartmentManager {
         }
     }
 
+    public void sendBill(String to, Integer price){}
+
 
     public static class TimeInterval{
-        LocalDate arrivalDay;
-        LocalDate endDay;
+        private LocalDate arrivalDay;
+        private LocalDate endDay;
 
         private TimeInterval(String arrivalDayStr, String endDayStr) {
             this.arrivalDay = LocalDate.parse(arrivalDayStr);
             this.endDay = LocalDate.parse(endDayStr);
+        }
+
+        public LocalDate getArrivalDay() {
+            return arrivalDay;
+        }
+
+        public void setArrivalDay(LocalDate arrivalDay) {
+            if (arrivalDay.compareTo(this.endDay) < 0)
+                this.arrivalDay = arrivalDay;
+            else {
+                this.arrivalDay = this.endDay;
+                this.endDay = arrivalDay;
+            }
+        }
+
+        public LocalDate getEndDay() {
+            return endDay;
+        }
+
+        public void setEndDay(LocalDate endDay) {
+            if (endDay.compareTo(this.arrivalDay) >0)
+                this.endDay = endDay;
+            else {
+                this.endDay = this.arrivalDay;
+                this.arrivalDay = endDay;
+            }
         }
 
         public static TimeInterval getValidInterval(String arrivalDayStr, String endDayStr){

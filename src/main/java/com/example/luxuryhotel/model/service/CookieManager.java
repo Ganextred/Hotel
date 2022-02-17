@@ -1,4 +1,4 @@
-package com.example.luxuryhotel.model;
+package com.example.luxuryhotel.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,5 @@ public class CookieManager {
         else if (lang.equals("ru"))
             lang = "en";
         localeResolver.setLocale(request,response, new Locale(lang));
-        System.out.println(lang);
-
     }
 }

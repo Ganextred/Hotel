@@ -1,4 +1,4 @@
-package com.example.luxuryhotel.repository;
+package com.example.luxuryhotel.model.repository;
 
 import com.example.luxuryhotel.entities.Request;
 import org.springframework.data.repository.CrudRepository;
