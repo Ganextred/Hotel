@@ -45,6 +45,7 @@ public class ApartmentsController {
         }
         return "apartments";
     }
+    //разрешить для неафторизированных
     @PostMapping("/apartments/applySort")
     public String applySort (@RequestParam (name = "page", required = false, defaultValue = "1") Integer page,
                              @RequestParam (name = "arrivalDay") String arrivalDay,
