@@ -27,7 +27,8 @@ import java.util.Map;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
-@RequestMapping("/admin") public class AdminController {
+@RequestMapping("/admin")
+public class AdminController {
     @Autowired
     UserRepository userRepo;
     @Autowired

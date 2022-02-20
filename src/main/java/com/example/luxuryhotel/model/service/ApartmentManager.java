@@ -94,7 +94,7 @@ public class ApartmentManager {
     }
 
 
-    private Sort getSort (String[] sortParams, Boolean[] orderParams){
+    public Sort getSort (String[] sortParams, Boolean[] orderParams){
         if (sortParams == null || sortParams.length == 0)
             sortParams = new String[]{"price"};
         if (orderParams == null || orderParams.length == 0)
@@ -215,12 +215,9 @@ public class ApartmentManager {
         }
 
         public void setArrivalDay(LocalDate arrivalDay) {
-            if (arrivalDay.compareTo(this.endDay) < 0)
-                this.arrivalDay = arrivalDay;
-            else {
-                this.arrivalDay = this.endDay;
-                this.endDay = arrivalDay;
-            }
+            TimeInterval ti = TimeInterval.getValidInterval(arrivalDay.toString(), endDay.toString());
+            this.arrivalDay = ti.getArrivalDay();
+            this.endDay = (ti.getEndDay());
         }
 
         public LocalDate getEndDay() {
@@ -228,12 +225,9 @@ public class ApartmentManager {
         }
 
         public void setEndDay(LocalDate endDay) {
-            if (endDay.compareTo(this.arrivalDay) >0)
-                this.endDay = endDay;
-            else {
-                this.endDay = this.arrivalDay;
-                this.arrivalDay = endDay;
-            }
+            TimeInterval ti = TimeInterval.getValidInterval(arrivalDay.toString(), endDay.toString());
+            this.arrivalDay = ti.getArrivalDay();
+            this.endDay = (ti.getEndDay());
         }
 
         public static TimeInterval getValidInterval(String arrivalDayStr, String endDayStr){

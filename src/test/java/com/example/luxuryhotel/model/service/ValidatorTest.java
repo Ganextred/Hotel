@@ -1,14 +1,18 @@
-package com.example.luxuryhotel.model;
+package com.example.luxuryhotel.model.service;
 
-
-import com.example.luxuryhotel.model.service.Validator;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class ValidatorTest {
-
+    @Autowired
     Validator valid;
     @Test
     void nullEmail() {
@@ -44,4 +48,24 @@ class ValidatorTest {
         assertFalse (valid.email("Jhon$"));
     }
 
+    @Test
+    void updateApartmentTst(){
+        List<String> messages = valid.updateApartment(null,null, null);
+        assertTrue(messages.containsAll(List.of("choseClazz", "incorrectBeds", "incorrectPrice")));
+    }
+
+    @Test
+    void sendRequest() {
+        List<String> messages = valid.sendRequest(LocalDate.now().toString(),LocalDate.now().toString(),null,null, null);
+        assertTrue(messages.containsAll(List.of("choseClazz", "incorrectBeds", "writeWishes")));
+    }
+
+
+    @Test
+    void timeInterval() {
+        List<String> messages = valid.timeInterval(LocalDate.now().toString(), LocalDate.now().toString());
+        assertEquals(messages.size(), 0);
+        messages = valid.timeInterval(LocalDate.now().plusDays(2).toString(), LocalDate.now().toString());
+        assertTrue(messages.contains("wrongDayOrder"));
+    }
 }
