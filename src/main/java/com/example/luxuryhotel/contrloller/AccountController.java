@@ -45,7 +45,7 @@ public class AccountController {
                 apartmentStatusRepo.findApartmentStatusByUserAndStatusAndPayTimeLimitAfter(user,Status.BOOKED,LocalDateTime.now());
         List<ApartmentStatus> bgStatuses =
                 apartmentStatusRepo.findApartmentStatusByUserAndStatus(user,Status.BOUGHT);
-        List<Request> requests = requestRepo.findByAndAnswerStatusIsNotNull();
+        List<Request> requests = requestRepo.findByUserIdAndAnswerStatusIsNotNull(user);
         model.addAttribute("user", user);
         model.addAttribute("bStatuses", bStatuses);
         model.addAttribute("bgStatuses", bgStatuses);

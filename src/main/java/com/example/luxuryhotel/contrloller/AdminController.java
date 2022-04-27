@@ -98,7 +98,6 @@ public class AdminController {
         AnswerRequestCommand command = commandFactory.getAnswerRequestCommand(request, apartment);
         List<String> messages = command.execute();
         if (messages.size() != 0) {
-            System.out.println(messages);
             return "redirect:/admin/seeRequest/?request=" + request.getId().toString();
         }
         return "redirect:/admin/adminPanel";

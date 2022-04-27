@@ -1,6 +1,7 @@
 package com.example.luxuryhotel.model.repository;
 
 import com.example.luxuryhotel.entities.Request;
+import com.example.luxuryhotel.entities.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,5 +13,5 @@ public interface RequestRepository extends CrudRepository<Request, Integer> {
     @Transactional
     Integer deleteRequestByAnswerStatus_PayTimeLimitBeforeOrEndDayBefore(LocalDateTime dateTime, LocalDate localDate);
     List<Request> findByAndAnswerStatusIsNull();
-    List<Request> findByAndAnswerStatusIsNotNull();
+    List<Request> findByUserIdAndAnswerStatusIsNotNull(User u);
 }
