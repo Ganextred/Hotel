@@ -164,7 +164,7 @@ public class ApartmentManager {
         if (status.size()==0){
             try {
                 if (!file.isEmpty()){
-                    file.transferTo(new File(new File("").getAbsolutePath()+ "/src/main/resources/static/img/room/room-"
+                    file.transferTo(new File(new File("").getAbsolutePath()+ "/src/main/upload/room-"
                             +apartment.getId()+'-'+apartment.getImages().size()));
                     apartment.getImages().add("room-" + apartment.getId().toString()+'-'+apartment.getImages().size());
                 }
@@ -192,7 +192,7 @@ public class ApartmentManager {
         apartmentRepo.delete(apartment);
         List<String> images = apartment.getImages();
         for (String image: images) {
-            File file = new File((new File("").getAbsolutePath() + "/src/main/resources/static/img/room/" + image));
+            File file = new File((new File("").getAbsolutePath() + "/src/main/resources/upload/" + image));
             if (!file.delete())
                 logger.warn("Room image wasn`t found in file system");
         }

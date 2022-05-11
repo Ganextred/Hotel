@@ -81,7 +81,7 @@ public class Apartment {
         List<String> images = getImages();
         String image = null;
         for (String path : images){
-            File f = new File(new File("").getAbsolutePath() + "/src/main/resources/static/img/room/" + path);
+            File f = new File(new File("").getAbsolutePath() + "/src/main/upload/" + path);
             if(f.exists() && f.isFile()) {
                 image = path;
                 break;

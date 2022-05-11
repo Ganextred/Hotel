@@ -23,6 +23,8 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:///" + System.getProperty("user.dir") + "/src/main/upload/");
     }
 
     @Bean
