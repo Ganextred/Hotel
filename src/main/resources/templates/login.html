@@ -42,6 +42,7 @@
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
+            <a th:href="@{/oauth2/authorization/google}">Login with Google</a>
             <form th:action="@{/login}" method="post">
                 <div class="form-group">
                     <label th:text="#{User_Name}">User Name</label>

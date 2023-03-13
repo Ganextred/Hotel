@@ -1528,7 +1528,7 @@ ul, ol {
 	padding-bottom: 88px;
 }
 .blog-item {
-	height: 450px;
+	height: 100px;
 	position: relative;
 	margin-bottom: 30px;
 	border-radius: 5px;
@@ -2342,7 +2342,7 @@ ul, ol {
 }
 
 .book-list{
-	max-height: 400px;
+	max-height: 50px;
 }
 .cont{
 	background: #c7b39b url("static/img/blog-details.jpg");
