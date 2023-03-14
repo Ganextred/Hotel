@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity(name = "usr")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
@@ -43,27 +43,22 @@ public class User implements UserDetails {
         return username;
     }
 
-    @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    @Override
     public boolean isEnabled() {
         return isActive();
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }

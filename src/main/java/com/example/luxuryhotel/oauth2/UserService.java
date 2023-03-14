@@ -1,5 +1,6 @@
-package com.example.luxuryhotel.model.service;
+package com.example.luxuryhotel.oauth2;
 
+import com.example.luxuryhotel.entities.User;
 import com.example.luxuryhotel.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +15,15 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findByUsername(username);
+        User user = userRepo.findByUsername(username);
+
+        System.out.println("UserService invoked");
+
+
+        if (user == null) {
+            throw new UsernameNotFoundException("Could not find user");
+        }
+
+        return new UserDetailsImpl(user);
     }
 }

@@ -6,7 +6,14 @@ import com.example.luxuryhotel.model.repository.ApartmentRepository;
 import com.example.luxuryhotel.model.repository.ApartmentStatusRepository;
 import com.example.luxuryhotel.model.repository.RequestRepository;
 import com.example.luxuryhotel.model.repository.UserRepository;
+import com.sun.mail.iap.ByteArray;
 import org.apache.log4j.Logger;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,10 +26,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Year;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,6 +103,15 @@ public class ApartmentManager {
                                 status.containsKey("AVAILABLE"), status.containsKey("BOOKED"),
                                 status.containsKey("BOUGHT"), status.containsKey("INACCESSIBLE"),
                                 pageable);
+    }
+
+    public List<Apartment> getThisYearAvailableApartments(Month month){
+        int year = LocalDate.now().getYear();
+        return apartmentRepo.
+                findWthStatus(LocalDate.of(year,month,1), LocalDate.of(year,month, month.length(Year.of(year).isLeap())),
+                        true, false,
+                        false, false,
+                        Pageable.unpaged());
     }
 
 
@@ -199,6 +220,50 @@ public class ApartmentManager {
     }
 
     public void sendBill(String to, Integer price){}
+
+
+    public ByteArrayOutputStream generateExcelFile(List<Apartment> apartmentList) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet;
+
+
+        sheet = workbook.createSheet("Student");
+        Row row = sheet.createRow(0);
+        createCell(row, 0, "ID", sheet);
+        createCell(row, 1, "PRICE", sheet);
+        createCell(row, 2, "BEDS", sheet);
+        createCell(row, 3, "Class", sheet);
+
+        int rowCount = 1;
+        for (Apartment apartment: apartmentList) {
+            Row nextRow = sheet.createRow(rowCount++);
+            int columnCount = 0;
+            createCell(nextRow, columnCount++, apartment.getId(), sheet);
+            createCell(nextRow, columnCount++, apartment.getPrice(), sheet);
+            createCell(nextRow, columnCount++, apartment.getBeds(), sheet);
+            createCell(nextRow, columnCount++, apartment.getClazz().toString(), sheet);
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+        return outputStream;
+    }
+
+    private void createCell(Row row, int columnCount, Object valueOfCell, XSSFSheet sheet) {
+        sheet.autoSizeColumn(columnCount);
+        Cell cell = row.createCell(columnCount);
+        if (valueOfCell instanceof Integer) {
+            cell.setCellValue((Integer) valueOfCell);
+        } else if (valueOfCell instanceof Long) {
+            cell.setCellValue((Long) valueOfCell);
+        } else if (valueOfCell instanceof String) {
+            cell.setCellValue((String) valueOfCell);
+        } else {
+            cell.setCellValue((Boolean) valueOfCell);
+        }
+    }
 
 
     public static class TimeInterval{

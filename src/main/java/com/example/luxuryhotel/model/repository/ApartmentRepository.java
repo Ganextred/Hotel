@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Repository;
 
 
@@ -15,6 +16,10 @@ import java.util.List;
 public interface ApartmentRepository extends CrudRepository<Apartment, Integer> {
     List<Apartment> findAll(Sort sort);
 
+    List<Apartment> findAll();
+
+    @Query("SELECT a.clazz, COUNT(a) FROM Apartment a GROUP BY a.clazz")
+    List<Object> countGroupedByClazzApartment();
 
     @Query("SELECT DISTINCT a FROM Apartment a LEFT JOIN ApartmentStatus as2 " +
             "ON a = as2.apartmentId " +
