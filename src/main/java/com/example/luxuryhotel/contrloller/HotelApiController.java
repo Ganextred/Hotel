@@ -72,7 +72,7 @@ public class HotelApiController {
 
 
     @PostMapping(value = "/apartmentsPostExcel", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Integer> importExcel(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<String> importExcel(@RequestParam("file") MultipartFile file) {
         List<Apartment> apartments = new ArrayList<>();
         try {
             InputStream is = file.getInputStream();
@@ -103,7 +103,7 @@ public class HotelApiController {
             System.out.println("error here");
         }
         // Return the parsed data as a response body
-        return new ResponseEntity<>(apartments.size(), HttpStatus.OK);
+        return new ResponseEntity<>("Apartments added: " + apartments.size(), HttpStatus.OK);
     }
 
 
