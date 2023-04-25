@@ -63,9 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                     .loginPage("/login")
-//                    .userInfoEndpoint()
-//                    .userService(oauthUserService)
-//                    .and()
+                    .userInfoEndpoint()
+                    .userService(oauthUserService)
+                    .and()
                 .successHandler((request, response, authentication) -> {
                     System.out.println("AuthenticationSuccessHandler invoked");
                     OAuth2User user = (OAuth2User) authentication.getPrincipal();

@@ -33,10 +33,10 @@ public class CookieManager {
     public void changLang(){
         String lang = findCookiesByName("lang");
         if (lang == null)
-            lang = "ru";
+            lang = "ua";
         else if (lang.equals("en"))
-            lang = "ru";
-        else if (lang.equals("ru"))
+            lang = "ua";
+        else if (lang.equals("ua"))
             lang = "en";
         localeResolver.setLocale(request,response, new Locale(lang));
     }
