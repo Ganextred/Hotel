@@ -172,7 +172,7 @@
         $.get('/api/apartmentOccupancy', function (JsonData) {
             data = google.visualization.arrayToDataTable(JsonData, false);
             var option = {
-                title: 'Кількість доступних впродовж всього місяці номерів в цьому році',
+                title: 'Кількість доступних впродовж всього місяця номерів в цьому році',
                 colors: ['#e7711c'],
                 histogram: { lastBucketPercentile: 5 },
                 width: 500,
